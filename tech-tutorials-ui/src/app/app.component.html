@@ -1,3 +1,37 @@
+<!-- app.component.html -->
+<div class="d-flex flex-column vh-100">
+
+  <!-- Header -->
+  <app-header></app-header>
+
+  <div class="d-flex flex-grow-1">
+    <!-- Sidebar -->
+    <app-sidebar class="bg-light" style="width: 250px;"></app-sidebar>
+
+    <!-- Main Content -->
+    <div class="flex-grow-1 p-3 overflow-auto">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <app-footer></app-footer>
+
+</div>
+
+
+
+
+<!--
+<router-outlet />
+npm install bootstrap
+npm install bootstrap-icons
+
+ng g c components/header
+ng g c components/footer
+ng g c components/sidebar
+-->
+
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
 <!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
@@ -331,6 +365,3 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
-
-<router-outlet />

@@ -1,0 +1,50 @@
+<!--
+<div class="accordion" id="tutorialAccordion">
+  <div class="accordion-item" *ngFor="let tech of technologies">
+    <h2 class="accordion-header" id="{{tech.id}}Heading">
+      <button class="accordion-button collapsed" type="button"
+              data-bs-toggle="collapse"
+              [attr.data-bs-target]="'#' + tech.id"
+              [attr.aria-controls]="tech.id">
+        {{tech.name}}
+      </button>
+    </h2>
+    <div [id]="tech.id" class="accordion-collapse collapse" [attr.aria-labelledby]="tech.id + 'Heading'"
+         data-bs-parent="#tutorialAccordion">
+      <div class="accordion-body">
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let topic of tech.topics" [routerLink]="topic.route">
+            {{ topic.name }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+-->
+
+<div class="accordion" id="tutorialAccordion">
+  <div class="accordion-item" *ngFor="let tech of technologies">
+    <h2 class="accordion-header" [id]="tech.id + 'Heading'">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              [attr.data-bs-target]="'#' + tech.id" aria-expanded="false" [attr.aria-controls]="tech.id">
+        {{ tech.name }}
+      </button>
+    </h2>
+    <div [id]="tech.id" class="accordion-collapse collapse"
+         [attr.aria-labelledby]="tech.id + 'Heading'" data-bs-parent="#tutorialAccordion">
+      <div class="accordion-body">
+        <ul class="list-group">
+          <li *ngFor="let topic of tech.topics"
+              class="list-group-item list-group-item-action"
+              routerLinkActive="active-topic"
+              [routerLink]="topic.route">
+            {{ topic.name }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
