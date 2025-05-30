@@ -1,1 +1,110 @@
-<p>component-life-cycle works!</p>
+<div id="container">
+  <h1>Angular Component Lifecycle Hooks</h1>
+
+  <div class="hook">
+    <h2>1. <code>ngOnChanges(changes: SimpleChanges)</code></h2>
+    <p><strong>When:</strong> Called when any <code>&#64;Input()</code> property changes.</p>
+    <p><strong>Use:</strong> To react to data passed in from a parent component.</p>
+    <p><strong>Note:</strong> Called before <code>ngOnInit</code>, and on every change.</p>
+  </div>
+
+  <div class="hook">
+    <h2>2. <code>ngOnInit()</code></h2>
+    <p><strong>When:</strong> Called once after the first <code>ngOnChanges</code>.</p>
+    <p><strong>Use:</strong> Initialization logic, API calls, subscriptions.</p>
+    <p><strong>Note:</strong> Runs only once per component lifecycle.</p>
+  </div>
+
+  <div class="hook">
+    <h2>3. <code>ngDoCheck()</code></h2>
+    <p><strong>When:</strong> Called during every change detection cycle.</p>
+    <p><strong>Use:</strong> For custom change detection logic.</p>
+    <p><strong>Note:</strong> Be cautious — it can affect performance.</p>
+  </div>
+
+  <div class="hook">
+    <h2>4. <code>ngAfterContentInit()</code></h2>
+    <p><strong>When:</strong> After external content is projected via <code>&lt;ng-content&gt;</code>.</p>
+    <p><strong>Use:</strong> When you need to act on projected content.</p>
+    <p><strong>Note:</strong> Called once.</p>
+  </div>
+
+  <div class="hook">
+    <h2>5. <code>ngAfterContentChecked()</code></h2>
+    <p><strong>When:</strong> After every check of projected content.</p>
+    <p><strong>Use:</strong> Monitor changes in projected content.</p>
+  </div>
+
+  <div class="hook">
+    <h2>6. <code>ngAfterViewInit()</code></h2>
+    <p><strong>When:</strong> After the component's view (and child views) are initialized.</p>
+    <p><strong>Use:</strong> DOM operations, working with <code>&#64;ViewChild</code>.</p>
+    <p><strong>Note:</strong> Called once.</p>
+  </div>
+
+  <div class="hook">
+    <h2>7. <code>ngAfterViewChecked()</code></h2>
+    <p><strong>When:</strong> After every check of the component’s view and its children.</p>
+    <p><strong>Use:</strong> To track view updates Angular doesn't detect automatically.</p>
+  </div>
+
+  <div class="hook">
+    <h2>8. <code>ngOnDestroy()</code></h2>
+    <p><strong>When:</strong> Just before Angular destroys the component.</p>
+    <p><strong>Use:</strong> Cleanup — unsubscribe from observables, stop timers, etc.</p>
+    <p><strong>Note:</strong> Crucial to prevent memory leaks.</p>
+  </div>
+
+  <h2>🔁 Lifecycle Summary Table</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>Hook</th>
+      <th>Called When?</th>
+      <th>Typical Use</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><code>ngOnChanges</code></td>
+      <td>On &#64;Input() property changes</td>
+      <td>React to external input</td>
+    </tr>
+    <tr>
+      <td><code>ngOnInit</code></td>
+      <td>After first ngOnChanges</td>
+      <td>Initialize logic, load data</td>
+    </tr>
+    <tr>
+      <td><code>ngDoCheck</code></td>
+      <td>Each change detection cycle</td>
+      <td>Custom change detection</td>
+    </tr>
+    <tr>
+      <td><code>ngAfterContentInit</code></td>
+      <td>After content projection</td>
+      <td>Act on projected content</td>
+    </tr>
+    <tr>
+      <td><code>ngAfterContentChecked</code></td>
+      <td>Every content check</td>
+      <td>Watch content changes</td>
+    </tr>
+    <tr>
+      <td><code>ngAfterViewInit</code></td>
+      <td>After view is initialized</td>
+      <td>DOM access, ViewChild</td>
+    </tr>
+    <tr>
+      <td><code>ngAfterViewChecked</code></td>
+      <td>Every view check</td>
+      <td>Track view updates</td>
+    </tr>
+    <tr>
+      <td><code>ngOnDestroy</code></td>
+      <td>Before component is removed</td>
+      <td>Unsubscribe, cleanup</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
