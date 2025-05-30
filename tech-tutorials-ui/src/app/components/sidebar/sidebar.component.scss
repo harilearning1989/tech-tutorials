@@ -4,3 +4,23 @@
   font-weight: bold;
   border-left: 4px solid #0056b3;
 }
+
+.scroll-body {
+  max-height: 250px; /* Adjust height as needed */
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+/* Optional: Better scrollbar styling (Chrome/Edge only) */
+.scroll-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll-body::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.use-hand-cursor{
+  cursor: pointer;
+}

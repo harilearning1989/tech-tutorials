@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: Tutorial
+  profiles:
+    active: dev
+  main:
+    banner-mode: off
+server:
+  port: 8082
