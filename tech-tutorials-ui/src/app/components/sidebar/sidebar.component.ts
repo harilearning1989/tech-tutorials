@@ -20,6 +20,7 @@ export class SidebarComponent {
       name: 'Angular',
       topics: [
         { name: 'Introduction', route: '/angular/introduction' },
+        { name: 'Install&Setup', route: '/angular/setup' },
         { name: 'CLI', route: '/angular/cli' },
         { name: 'Project Structure', route: '/angular/ps' },
         { name: 'Component Life Cycle', route: '/angular/clc' },
@@ -38,6 +39,8 @@ export class SidebarComponent {
         { name: 'Browser storage mechanisms', route: '/angular/storages'},
         { name: 'Custom Events', route: '/angular/cv' },
         { name: 'Interceptor', route: '/angular/interceptor' },
+        { name: 'Testing', route: '/angular/testing' },
+        { name: 'Linting & Formatting', route: '/angular/lf' },
       ]
     },
     {

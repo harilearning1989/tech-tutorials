@@ -1,1 +1,117 @@
-<p>project-structure works!</p>
+<div id="container">
+  <h1>Angular 19 Project Structure - Explained</h1>
+
+  <h2>📁 Project Tree</h2>
+  <pre><code>my-angular-app/
+├── node_modules/
+├── src/
+│   ├── app/
+│   │   ├── app-routing.module.ts
+│   │   ├── app.component.ts
+│   │   ├── app.component.html
+│   │   ├── app.component.css
+│   │   └── app.module.ts
+│   ├── assets/
+│   ├── environments/
+│   │   ├── environment.ts
+│   │   └── environment.prod.ts
+│   ├── index.html
+│   ├── main.ts
+│   ├── styles.css
+│   ├── polyfills.ts
+│   └── test.ts
+├── .editorconfig
+├── .gitignore
+├── angular.json
+├── package.json
+├── tsconfig.json
+├── tsconfig.app.json
+├── tsconfig.spec.json
+├── karma.conf.js
+└── README.md</code></pre>
+
+  <h2>🗂️ Folder & File Descriptions</h2>
+
+  <h3>📁 node_modules/</h3>
+  <p>Contains installed npm packages. Automatically generated after <code>npm install</code>.</p>
+
+  <h3>📁 src/</h3>
+  <p>Main source code for the app.</p>
+
+  <h4>📁 app/</h4>
+  <ul>
+    <li><code>app.module.ts</code> – Root module of the application</li>
+    <li><code>app-routing.module.ts</code> – Routing configuration</li>
+    <li><code>app.component.ts</code> – Main component logic</li>
+    <li><code>app.component.html</code> – Main component template</li>
+    <li><code>app.component.css</code> – Main component styling</li>
+  </ul>
+
+  <h4>📁 assets/</h4>
+  <p>Static files like images, icons, fonts.</p>
+
+  <h4>📁 environments/</h4>
+  <ul>
+    <li><code>environment.ts</code> – Dev settings</li>
+    <li><code>environment.prod.ts</code> – Production settings</li>
+  </ul>
+
+  <h4>📄 index.html</h4>
+  <p>Main HTML file loaded by the browser.</p>
+
+  <h4>📄 main.ts</h4>
+  <p>Entry point for bootstrapping the Angular application.</p>
+
+  <h4>📄 styles.css</h4>
+  <p>Global CSS styles.</p>
+
+  <h4>📄 polyfills.ts</h4>
+  <p>Browser compatibility support.</p>
+
+  <h4>📄 test.ts</h4>
+  <p>Test configuration setup for Angular's testing utilities.</p>
+
+  <h3>🔧 Configuration Files</h3>
+
+  <h4>📄 angular.json</h4>
+  <p>Angular CLI settings including build and serve options.</p>
+
+  <h4>📄 package.json</h4>
+  <p>Project metadata, dependencies, and npm scripts.</p>
+  <pre><code>"scripts": &#123;
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "test": "ng test"
+&#125;</code></pre>
+
+  <h4>📄 tsconfig.json</h4>
+  <p>Base TypeScript configuration.</p>
+
+  <ul>
+    <li><code>tsconfig.app.json</code> – App-specific TS config</li>
+    <li><code>tsconfig.spec.json</code> – Test-specific TS config</li>
+  </ul>
+
+  <h4>📄 karma.conf.js</h4>
+  <p>Karma test runner config file.</p>
+
+  <h4>📄 .editorconfig</h4>
+  <p>Editor formatting rules for consistency across environments.</p>
+
+  <h4>📄 .gitignore</h4>
+  <p>Specifies files to exclude from version control (e.g., <code>node_modules</code>).</p>
+
+  <h4>📄 README.md</h4>
+  <p>Markdown file with project instructions and info.</p>
+
+  <h2>🧩 Notes</h2>
+  <ul>
+    <li>If using <strong>standalone components</strong>, <code>app.module.ts</code> may be replaced with <code>bootstrapApplication()</code> in <code>main.ts</code>.</li>
+    <li>If using <strong>SCSS</strong>, styles files will be <code>.scss</code> instead of <code>.css</code>.</li>
+    <li>Environment switching is handled by the <code>fileReplacements</code> array in <code>angular.json</code>.</li>
+  </ul>
+
+  <p><strong>Need this styled with Bootstrap or Tailwind CSS?</strong> Let me know!</p>
+
+</div>

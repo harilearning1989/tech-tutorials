@@ -5,6 +5,7 @@ import com.itextpdf.forms.fields.PdfButtonFormField;
 import com.itextpdf.forms.fields.PdfFormField;
 import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.geom.Rectangle;
@@ -43,6 +44,86 @@ public class PdfRestController {
 
     public PdfRestController(PdfService pdfService) {
         this.pdfService = pdfService;
+    }
+
+    @GetMapping("/generate4")
+    public ResponseEntity<byte[]> generatePdf4() {
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            PageSize pageSize = new PageSize(900, 842);
+            PdfWriter writer = new PdfWriter(baos);
+            PdfDocument pdf = new PdfDocument(writer);
+            PdfCanvas canvas = new PdfCanvas(pdf.addNewPage());
+            //Document document = new Document(pdfDoc, PageSize.A4);
+            Document document = new Document(pdf, pageSize);
+            //document.setMargins(110, 40, 70, 40); // top, right, bottom, left
+
+            float width = pageSize.getWidth();
+            float height = pageSize.getHeight();
+
+            // Draw Header (Top 100pt)
+            canvas.setFillColor(new DeviceRgb(30, 136, 229))  // Blue
+                    .rectangle(0, height - 100, width, 100)
+                    .fill();
+
+            // Draw Footer (Bottom 60pt)
+            canvas.setFillColor(new DeviceRgb(76, 175, 80))  // Green
+                    .rectangle(0, 0, width, 60)
+                    .fill();
+
+            // Draw Body (Remaining area)
+            canvas.setFillColor(new DeviceRgb(255, 241, 118))  // Light Yellow
+                    .rectangle(0, 60, width, height - 160)
+                    .fill();
+
+            // Header Text (automatically flows into margin space)
+            Paragraph title = new Paragraph("APPLICATION FORM")
+                    .setFontSize(20)
+                    .setBold()
+                    .setTextAlignment(TextAlignment.CENTER)
+                    .setFontColor(new DeviceRgb(255, 255, 255))
+                    .setMarginBottom(20);
+            document.add(title);
+
+            // Body Table
+            float[] colWidths = {3, 7};
+            Table table = new Table(UnitValue.createPercentArray(colWidths)).useAllAvailableWidth();
+
+            table.addCell("Full Name:");
+            table.addCell("_____________________________________");
+
+            table.addCell("Date of Birth:");
+            table.addCell("_____________________________________");
+
+            table.addCell("Phone Number:");
+            table.addCell("_____________________________________");
+
+            table.addCell("Email Address:");
+            table.addCell("_____________________________________");
+
+            table.addCell("Address:");
+            table.addCell("_____________________________________");
+
+            document.add(table);
+
+            // Footer Text (placed in bottom margin area using alignment and margins)
+            Paragraph footer = new Paragraph("Footer Section")
+                    .setFontSize(10)
+                    .setTextAlignment(TextAlignment.CENTER)
+                    .setFontColor(new DeviceRgb(255, 255, 255))
+                    .setMarginTop(20);
+            document.add(footer);
+
+            document.close();
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=application_form.pdf")
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(baos.toByteArray());
+
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                    .body(("Error generating PDF: " + e.getMessage()).getBytes());
+        }
     }
 
     @GetMapping("/generateTmp3")

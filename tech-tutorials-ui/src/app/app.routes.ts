@@ -22,12 +22,14 @@ import {
 import {BrowserStorageComponent} from './components/angular/browser-storage/browser-storage.component';
 import {CustomEventComponent} from './components/angular/custom-event/custom-event.component';
 import {InterceptorComponent} from './components/angular/interceptor/interceptor.component';
+import {InstallSetupComponent} from './components/angular/install-setup/install-setup.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/angular/introduction', pathMatch: 'full' },
 
   // Angular Topics
   { path: 'angular/introduction', component: IntroductionComponent },
+  { path: 'angular/setup', component: InstallSetupComponent },
   { path: 'angular/cli', component: CliNewCreationComponent },
   { path: 'angular/ps', component: ProjectStructureComponent },
   { path: 'angular/clc', component: ComponentLifeCycleComponent },

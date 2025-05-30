@@ -1,19 +1,47 @@
-<div id="cli">
-  <h2>Angular CLI</h2>
-  <p>
-    Angular CLI (Command Line Interface) is a powerful tool that helps developers:
-  </p>
-  <ul>
-    <li>Generate components, services, and modules with a single command.</li>
-    <li>Build, test, and deploy Angular applications easily.</li>
-    <li>Maintain consistent project structure.</li>
-    <li>Optimize projects for production using Ahead-of-Time (AOT) compilation and tree-shaking.</li>
-  </ul>
-  <p><strong>Example Commands:</strong></p>
-  <pre>
-ng new my-app         // Create a new Angular project
-ng serve              // Start a dev server
-ng generate component my-component  // Generate a component
-ng build --prod       // Build for production
-    </pre>
+<div id="container">
+  <h3 class="bg-secondary">Command Line Interface</h3>
+  <p>The <strong>Angular CLI</strong> (Command Line Interface) is a powerful tool for creating, managing, building, and
+    testing Angular applications from the command line.</p>
+
+  <h2>Key Features</h2>
+
+  <h3>1. Scaffolding</h3>
+  <p>Generate app skeletons and Angular constructs like components and services:</p>
+  <pre><code>ng new my-app
+ng g c my-component</code></pre>
+
+  <h3>2. Development Server</h3>
+  <p>Run a local server with live reload:</p>
+  <pre><code>ng serve</code></pre>
+  <p>Run a local server with live reload and open in browser automatically</p>
+  <pre><code>ng serve -o</code></pre>
+  <p>Run a local server with custom port and open in browser automatically</p>
+  <pre><code>ng serve -p 4300 -o</code></pre>
+  <p>here -p is port and -o is open</p>
+
+  <h3>3. Build Tools</h3>
+  <p>Build your application for different environments:</p>
+  <pre><code>ng build --prod</code></pre>
+
+  <h3>4. Testing</h3>
+  <p>Run unit and end-to-end tests:</p>
+  <pre><code>ng test
+ng e2e</code></pre>
+
+  <h3>5. Linting &amp; Formatting</h3>
+  <p>Check code style and syntax issues:</p>
+  <pre><code>ng lint</code></pre>
+
+  <h3>6. Configuration Management</h3>
+  <p>Supports multiple environments like dev, staging, and production with configurable settings.</p>
+
+  <h2>Installation</h2>
+  <pre><code>npm install -g &#64;angular/cli</code></pre>
+
+  <h2>Check Angular CLI Version</h2>
+  <pre><code>ng version</code></pre>
+
+  <p><em>Angular CLI helps automate repetitive tasks, enforce best practices, and streamline the development
+    process.</em></p>
+
 </div>

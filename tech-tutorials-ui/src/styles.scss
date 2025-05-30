@@ -3,3 +3,11 @@
 body, html {
   font-family: 'Times New Roman', Times, serif !important;
 }
+
+#container {
+  font-family: Arial, sans-serif;
+  background-color: #fafafa;
+  height: 80vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
