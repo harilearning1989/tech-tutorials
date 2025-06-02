@@ -23,6 +23,9 @@ import {BrowserStorageComponent} from './components/angular/browser-storage/brow
 import {CustomEventComponent} from './components/angular/custom-event/custom-event.component';
 import {InterceptorComponent} from './components/angular/interceptor/interceptor.component';
 import {InstallSetupComponent} from './components/angular/install-setup/install-setup.component';
+import {RouteGuardsComponent} from './components/angular/route-guards/route-guards.component';
+import {AngularTestingComponent} from './components/angular/angular-testing/angular-testing.component';
+import {LintingFormattingComponent} from './components/angular/linting-formatting/linting-formatting.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/angular/introduction', pathMatch: 'full' },
@@ -45,8 +48,11 @@ export const routes: Routes = [
   { path: 'angular/services', component: ServicesComponent },
   { path: 'angular/api', component: RestApiComponent },
   { path: 'angular/authentication', component: RestApiAuthenticationComponent },
+  { path: 'angular/rg', component: RouteGuardsComponent },
   { path: 'angular/storages', component: BrowserStorageComponent },
   { path: 'angular/cv', component: CustomEventComponent },
+  { path: 'angular/at', component: AngularTestingComponent },
+  { path: 'angular/lf', component: LintingFormattingComponent }, // Assuming Linting & Formatting is part of testing for now
   { path: 'angular/interceptor', component: InterceptorComponent },
   { path: '**', redirectTo: '/angular/introduction' } // Wildcard route
 ];

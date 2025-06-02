@@ -1,1 +1,237 @@
-<p>rest-api-authentication works!</p>
+<div id="container">
+  <h3>🔐 Angular 19 Token-Based Authentication (JWT)</h3>
+
+  <p>
+    This guide walks you through implementing <strong>token-based authentication</strong> using Angular 19, including
+    how to:
+  </p>
+  <ul>
+    <li>Build a login form</li>
+    <li>Call a REST API for login</li>
+    <li>Store and use the token (JWT)</li>
+    <li>Protect routes with AuthGuard</li>
+  </ul>
+
+  <hr>
+
+  <h3>📘 What is Token-Based Authentication?</h3>
+  <p>
+    A server issues a token (usually a JWT) after verifying user credentials.
+    The frontend app stores this token and includes it in future API requests.
+  </p>
+
+  <h3>🔁 Basic Flow</h3>
+  <ol>
+    <li>User logs in → API returns token</li>
+    <li>Token is stored in <code>localStorage</code></li>
+    <li>Every request sends token in headers</li>
+    <li>Backend checks token → grants or denies access</li>
+  </ol>
+
+  <hr>
+
+  <h3>⚙️ Step-by-Step Angular Setup</h3>
+
+  <h3>📁 File Structure</h3>
+  <code>
+    src/<br>
+    ├── app/<br>
+    │ ├── services/<br>
+    │ │ └── auth.service.ts<br>
+    │ ├── components/<br>
+    │ │ └── login.component.ts<br>
+    │ ├── guards/<br>
+    │ │ └── auth.guard.ts<br>
+    │ ├── interceptors/<br>
+    │ │ └── token.interceptor.ts<br>
+    │ └── app.component.ts<br>
+    └── main.ts
+  </code>
+
+  <hr>
+
+  <h3>🔧 1. AuthService – Login, Store Token</h3>
+  <code>
+    <pre>
+      <code>
+        import &#123; Injectable &#125; from '&#64;angular/core';
+        import &#123; HttpClient &#125; from '&#64;angular/common/http';
+        import &#123; Observable, tap &#125; from 'rxjs';
+
+        &#64;Injectable(&#123; providedIn: 'root' &#125;)
+        export class AuthService &#123;
+        private loginUrl = 'https://example.com/api/login'; // Change to your API
+
+        constructor(private http: HttpClient) &#123;&#125;
+
+        login(data: &#123; email: string; password: string &#125;): Observable&lt;any&gt; &#123;
+          return this.http.post(this.loginUrl, data).pipe(
+          tap((res: any) =&gt; localStorage.setItem('token', res.token))
+          );
+        &#125;
+
+        logout(): void &#123;
+          localStorage.removeItem('token');
+        &#125;
+
+        getToken(): string | null &#123;
+          return localStorage.getItem('token');
+        &#125;
+
+        isLoggedIn(): boolean &#123;
+          return !!this.getToken();
+        &#125;
+      &#125;
+        </code>
+    </pre>
+  </code>
+
+  <hr>
+
+  <h3>🧩 2. Login Component</h3>
+  <code>
+    <pre>
+      <code>
+        import &#123; Component &#125; from '&#64;angular/core';
+        import &#123; FormsModule &#125; from '&#64;angular/forms';
+        import &#123; CommonModule &#125; from '&#64;angular/common';
+        import &#123; AuthService &#125; from '../services/auth.service';
+        import &#123; HttpClientModule &#125; from '&#64;angular/common/http';
+
+        &#64;Component(&#123;
+          selector: 'app-login',
+          standalone: true,
+          imports: [CommonModule, FormsModule, HttpClientModule],
+          template: `
+          &lt;h3&gt;Login&lt;/h3&gt;
+          &lt;form (ngSubmit)="onSubmit()" #f="ngForm"&gt;
+          &lt;input name="email" [(ngModel)]="email" required placeholder="Email"&gt;&lt;br&gt;&lt;br&gt;
+          &lt;input name="password" [(ngModel)]="password" type="password" required placeholder="Password"&gt;&lt;br&gt;&lt;br&gt;
+          &lt;button type="submit"&gt;Login&lt;/button&gt;
+          &lt;/form&gt;
+        &lt;p *ngIf="error"&gt;<p ngNonBindable>
+          {{ error }}</p>&lt;/p&gt;
+          `
+          &#125;)
+        export class LoginComponent &#123;
+            email = '';
+            password = '';
+            error = '';
+
+            constructor(private auth: AuthService) &#123;&#125;
+
+            onSubmit() &#123;
+              this.auth.login(&#123; email: this.email, password: this.password &#125;).subscribe(&#123;
+              next: () =&gt; alert('Login successful'),
+                error: () =&gt; this.error = 'Login failed'
+              &#125;);
+            &#125;
+        &#125;
+      </code>
+    </pre>
+  </code>
+
+  <hr>
+
+  <h3>🛡️ 3. AuthGuard – Protect Routes</h3>
+  <code>
+    <pre>
+      <code>
+        import &#123; Injectable &#125; from '&#64;angular/core';
+        import &#123; CanActivateFn &#125; from '&#64;angular/router';
+        import &#123; AuthService &#125; from '../services/auth.service';
+
+        export const authGuard: CanActivateFn = () =&gt; &#123;
+          return inject(AuthService).isLoggedIn();
+        &#125;;
+        </code>
+    </pre>
+  </code>
+
+  <hr>
+
+  <h3>📎 4. Token Interceptor – Attach Token</h3>
+  <code>
+    <pre>
+      <code>
+        import &#123; Injectable &#125; from '&#64;angular/core';
+        import &#123; HttpInterceptor, HttpRequest, HttpHandler &#125; from '&#64;angular/common/http';
+        import &#123; AuthService &#125; from '../services/auth.service';
+        import &#123; Observable &#125; from 'rxjs';
+
+        &#64;Injectable()
+        export class TokenInterceptor implements HttpInterceptor &#123;
+        constructor(private auth: AuthService) &#123;&#125;
+
+        intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;any&gt; &#123;
+          const token = this.auth.getToken();
+          if (token) &#123;
+          req = req.clone(&#123;
+          headers: req.headers.set('Authorization', 'Bearer ' + token)
+          &#125;);
+        &#125;
+          return next.handle(req);
+          &#125;
+        &#125;
+      </code></pre>
+  </code>
+
+  <hr>
+
+  <h3>🔁 5. Provide Interceptor in Main</h3>
+  <code>
+    <pre>
+      <code>
+    import &#123; bootstrapApplication &#125; from '&#64;angular/platform-browser';
+    import &#123; AppComponent &#125; from './app/app.component';
+    import &#123; provideHttpClient, withInterceptors &#125; from '&#64;angular/common/http';
+    import &#123; TokenInterceptor &#125; from './app/interceptors/token.interceptor';
+
+    bootstrapApplication(AppComponent, &#123;
+      providers: [provideHttpClient(withInterceptors([TokenInterceptor]))]
+    &#125;);
+      </code></pre>
+
+  </code>
+
+  <hr>
+
+  <h3>🏁 6. App Component</h3>
+  <code>
+    <pre>
+      <code>
+      import &#123; Component &#125; from '&#64;angular/core';<br>
+      import &#123; LoginComponent &#125; from './components/login.component';
+
+      &#64;Component(&#123;
+      selector: 'app-root',
+      standalone: true,
+      imports: [LoginComponent],
+      template: `&lt;app-login&gt;&lt;/app-login&gt;`
+      &#125;)
+      export class AppComponent &#123;&#125;
+      </code>
+    </pre>
+  </code>
+
+  <hr>
+
+  <h3>🔐 Optional: Protect Routes with Guard</h3>
+  <code>
+    // In route config:
+    &#123; path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] &#125;
+  </code>
+
+  <hr>
+
+  <h3>✅ Summary</h3>
+  <ul>
+    <li><strong>Login:</strong> AuthService sends credentials and stores token</li>
+    <li><strong>Storage:</strong> Token saved in <code>localStorage</code></li>
+    <li><strong>Interceptor:</strong> Automatically attaches token to requests</li>
+    <li><strong>Guard:</strong> Prevents access to routes without token</li>
+  </ul>
+
+  <p>Token-based authentication keeps Angular apps stateless, secure, and simple!</p>
+
+</div>

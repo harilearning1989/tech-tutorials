@@ -1,1 +1,197 @@
-<p>rest-api works!</p>
+<div id="container">
+  <h3>🌐 Angular 19 + REST API Integration (Standalone Components)</h3>
+
+  <p>
+    In this tutorial, we demonstrate how to call a REST API using Angular 19.
+    The example uses a public JSON API (e.g., <code>https://jsonplaceholder.typicode.com/users</code>) to fetch user
+    data and display it in a component.
+  </p>
+
+  <hr>
+
+  <h3>📦 Step 1: Install Angular and Create a Standalone App</h3>
+
+  <code>
+    npm install -g &#64;angular/cli<br>
+    ng new angular19-api-demo --standalone<br>
+    cd angular19-api-demo
+  </code>
+
+  <p>Then replace the boilerplate with the following files below.</p>
+
+  <hr>
+
+  <h3>🔧 Step 2: Setup the Service to Call REST API</h3>
+  <p><strong>File:</strong> <code>src/app/services/user.service.ts</code></p>
+
+  <code>
+    <pre>
+      <code>
+    import &#123; Injectable &#125; from '&#64;angular/core';
+    import &#123; HttpClient &#125; from '&#64;angular/common/http';
+    import &#123; Observable &#125; from 'rxjs';
+
+    export interface User &#123;
+      id: number;
+      name: string;
+      email: string;
+    &#125;
+
+    &#64;Injectable(&#123; providedIn: 'root' &#125;)
+    export class UserService &#123;
+      private apiUrl = 'https://jsonplaceholder.typicode.com/users';
+
+      constructor(private http: HttpClient) &#123;&#125;
+
+      getUsers(): Observable&lt;User[]&gt; &#123;
+        return this.http.get&lt;User[]&gt;(this.apiUrl);
+      &#125;
+    &#125;
+      </code>
+    </pre>
+
+  </code>
+
+  <ul>
+    <li>This service uses <code>HttpClient</code> to call a public API.</li>
+    <li><code>Observable&lt;User[]&gt;</code> lets components subscribe to the data.</li>
+  </ul>
+
+  <hr>
+
+  <h3>🧩 Step 3: Display API Data in a Standalone Component</h3>
+  <p><strong>File:</strong> <code>src/app/components/user-list.component.ts</code></p>
+
+  <code>
+    <pre>
+      <code>
+    import &#123; Component, OnInit &#125; from '&#64;angular/core';
+    import &#123; CommonModule &#125; from '&#64;angular/common';
+    import &#123; HttpClientModule &#125; from '&#64;angular/common/http';
+    import &#123; UserService, User &#125; from '../services/user.service';
+
+    &#64;Component(&#123;
+      selector: 'app-user-list',
+      standalone: true,
+      imports: [CommonModule, HttpClientModule],
+      template: `
+      &lt;h2&gt;User List&lt;/h2&gt;
+
+      &lt;div *ngIf="loading"&gt;Loading...&lt;/div&gt;
+    &lt;div *ngIf="error"&gt;Error: <p ngNonBindable>{{ error }}</p>&lt;/div&gt;
+
+      &lt;ul&gt;
+      &lt;li *ngFor="let user of users"&gt;
+    &lt;strong&gt;<p ngNonBindable>{{ user.name }}</p>&lt;/strong&gt; - <p ngNonBindable>{{ user.email }}</p>
+      &lt;/li&gt;
+      &lt;/ul&gt;
+      `
+      &#125;)
+    export class UserListComponent implements OnInit &#123;
+        users: User[] = [];
+        loading = true;
+        error = '';
+
+        constructor(private userService: UserService) &#123;&#125;
+
+        ngOnInit() &#123;
+          this.userService.getUsers().subscribe(&#123;
+          next: data => &#123;
+          this.users = data;
+          this.loading = false;
+        &#125;,
+        error: err => &#123;
+          this.error = 'Failed to load users';
+          this.loading = false;
+        &#125;
+      &#125;);
+      &#125;
+    &#125;
+      </code>
+    </pre>
+  </code>
+
+  <ul>
+    <li>Uses <code>*ngIf</code> to show loading and error states.</li>
+    <li>Subscribes to the service and updates the view with the results.</li>
+  </ul>
+
+  <hr>
+
+  <h3>🏁 Step 4: Create App Component</h3>
+  <p><strong>File:</strong> <code>src/app/app.component.ts</code></p>
+
+  <code>
+    <pre>
+      <code>
+    import &#123; Component &#125; from '&#64;angular/core';
+    import &#123; UserListComponent &#125; from './components/user-list.component';
+
+    &#64;Component(&#123;
+    selector: 'app-root',
+    standalone: true,
+    imports: [UserListComponent],
+    template: `&lt;app-user-list&gt;&lt;/app-user-list&gt;`
+    &#125;)
+    export class AppComponent &#123;&#125;
+      </code>
+    </pre>
+
+  </code>
+
+  <hr>
+
+  <h3>🚀 Step 5: Bootstrap the App</h3>
+  <p><strong>File:</strong> <code>src/main.ts</code></p>
+
+  <code>
+    <pre>
+      <code>
+    import &#123; bootstrapApplication &#125; from '&#64;angular/platform-browser';
+    import &#123; AppComponent &#125; from './app/app.component';
+
+    bootstrapApplication(AppComponent)
+    .catch(err =&gt; console.error(err));
+      </code>
+    </pre>
+  </code>
+
+  <hr>
+
+  <h3>📁 Project Structure Overview</h3>
+
+  <code>
+    src/<br>
+    ├── app/<br>
+    │ ├── services/<br>
+    │ │ └── user.service.ts<br>
+    │ ├── components/<br>
+    │ │ └── user-list.component.ts<br>
+    │ └── app.component.ts<br>
+    └── main.ts
+  </code>
+
+  <hr>
+
+  <h3>🧠 Key Concepts in Angular 19 API Integration</h3>
+  <ul>
+    <li><strong>Standalone Components:</strong> No need for NgModules.</li>
+    <li><strong>HttpClient:</strong> Core service for making HTTP requests.</li>
+    <li><strong>Observable Pattern:</strong> Asynchronous, reactive data handling.</li>
+    <li><strong>Error Handling:</strong> Using <code>subscribe()</code> error callbacks.</li>
+  </ul>
+
+  <hr>
+
+  <h3>✅ Summary</h3>
+
+  <p>With Angular 19 and standalone components, calling a REST API is straightforward:</p>
+  <ol>
+    <li>Create a service with <code>HttpClient</code>.</li>
+    <li>Inject the service into a component.</li>
+    <li>Use <code>subscribe()</code> to process API results.</li>
+    <li>Handle loading and error states in the view.</li>
+  </ol>
+
+  <p><strong>You're now ready to connect Angular 19 to any REST API! 🎉</strong></p>
+</div>

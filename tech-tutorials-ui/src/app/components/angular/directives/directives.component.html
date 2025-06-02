@@ -36,24 +36,24 @@ import &#123; Directive, ElementRef, HostListener, Input &#125; from '&#64;angul
 
       &#64;Directive(&#123;
         selector: '[appHighlight]'
-        &#125;)
+      &#125;)
       export class HighlightDirective &#123;
       &#64;Input() highlightColor: string = 'yellow';
 
       constructor(private el: ElementRef) &#123;&#125;
 
-  &#64;HostListener('mouseenter') onMouseEnter() &#123;
-    this.highlight(this.highlightColor || 'lightgray');
-  &#125;
+      &#64;HostListener('mouseenter') onMouseEnter() &#123;
+        this.highlight(this.highlightColor || 'lightgray');
+      &#125;
 
-  &#64;HostListener('mouseleave') onMouseLeave() &#123;
-    this.highlight('');
-  &#125;
+      &#64;HostListener('mouseleave') onMouseLeave() &#123;
+        this.highlight('');
+      &#125;
 
-  private highlight(color: string) &#123;
-    this.el.nativeElement.style.backgroundColor = color;
-  &#125;
-&#125;
+      private highlight(color: string) &#123;
+        this.el.nativeElement.style.backgroundColor = color;
+      &#125;
+      &#125;
 </code></pre>
   </section>
 

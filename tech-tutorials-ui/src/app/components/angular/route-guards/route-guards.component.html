@@ -1,0 +1,140 @@
+<div id="container">
+  <h1>🔐 Angular 19 Route Guards – Full Tutorial</h1>
+
+  <p>
+    Route Guards are used in Angular to control access to certain routes based on logic like authentication,
+    unsaved changes, or permissions.
+  </p>
+
+  <hr>
+
+  <h2>🛡️ What Are Route Guards?</h2>
+  <p>
+    Guards are functions or classes that determine whether a user can access, leave, or load a route.
+    Angular supports the following types:
+  </p>
+
+  <ul>
+    <li><strong>CanActivate</strong> – Prevent access to a route</li>
+    <li><strong>CanDeactivate</strong> – Warn before leaving a route</li>
+    <li><strong>CanLoad</strong> – Block lazy loading</li>
+    <li><strong>CanActivateChild</strong> – Guard child routes</li>
+    <li><strong>Resolve</strong> – Fetch data before route loads</li>
+  </ul>
+
+  <hr>
+
+  <h2>📦 Create an Auth Guard (CanActivate)</h2>
+
+  <p><strong>auth.guard.ts:</strong></p>
+  <code>
+    import &#123; CanActivateFn &#125; from '&#64;angular/router';<br>
+    import &#123; inject &#125; from '&#64;angular/core';<br>
+    import &#123; AuthService &#125; from '../services/auth.service';
+
+    export const authGuard: CanActivateFn = (route, state) =&gt; &#123;
+    const auth = inject(AuthService);
+    return auth.isLoggedIn(); // return true or false
+    &#125;;
+  </code>
+
+  <p><strong>auth.service.ts:</strong></p>
+  <code>
+    import &#123; Injectable &#125; from '&#64;angular/core';
+
+    &#64;Injectable(&#123; providedIn: 'root' &#125;)
+    export class AuthService &#123;
+    isLoggedIn(): boolean &#123;
+    return !!localStorage.getItem('token'); // or real check
+    &#125;
+    &#125;
+  </code>
+
+  <hr>
+
+  <h2>🔧 Setup Routes with Guards</h2>
+
+  <p><strong>app.routes.ts (Angular 15+):</strong></p>
+  <code>
+    import &#123; Routes &#125; from '&#64;angular/router';<br>
+    import &#123; authGuard &#125; from './guards/auth.guard';<br>
+    import &#123; HomeComponent &#125; from './components/home.component';<br>
+    import &#123; DashboardComponent &#125; from './components/dashboard.component';
+
+    export const routes: Routes = [
+    &#123; path: '', component: HomeComponent &#125;,
+    &#123; path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] &#125;
+    ];
+  </code>
+
+  <hr>
+
+  <h2>📌 Register Routes and Bootstrap</h2>
+
+  <p><strong>main.ts:</strong></p>
+  <code>
+    import &#123; bootstrapApplication &#125; from '&#64;angular/platform-browser';<br>
+    import &#123; provideRouter &#125; from '&#64;angular/router';<br>
+    import &#123; AppComponent &#125; from './app/app.component';<br>
+    import &#123; routes &#125; from './app/app.routes';
+
+    bootstrapApplication(AppComponent, &#123;
+    providers: [provideRouter(routes)]
+    &#125;);
+  </code>
+
+  <hr>
+
+  <h2>✋ CanDeactivate Guard Example</h2>
+
+  <p><strong>can-exit.guard.ts:</strong></p>
+  <code>
+    import &#123; CanDeactivateFn &#125; from '&#64;angular/router';<br>
+    import &#123; inject &#125; from '&#64;angular/core';
+
+    export const canExitGuard: CanDeactivateFn&lt;any&gt; = (component, route, state) =&gt; &#123;
+    return confirm('You have unsaved changes. Leave this page?');
+    &#125;;
+  </code>
+
+  <p><strong>Route setup:</strong></p>
+  <code>
+    &#123; path: 'edit', component: EditComponent, canDeactivate: [canExitGuard] &#125;
+  </code>
+
+  <hr>
+
+  <h2>📥 Lazy Loading with CanLoad</h2>
+
+  <code>
+    export const canLoadGuard: CanLoadFn = () =&gt; &#123;
+    const auth = inject(AuthService);
+    return auth.isLoggedIn();
+    &#125;;
+
+    &#123; path: 'admin', loadChildren: () =&gt; import('./admin.routes'), canLoad: [canLoadGuard] &#125;
+  </code>
+
+  <hr>
+
+  <h2>🧠 Summary</h2>
+
+  <ul>
+    <li><strong>Guards</strong> are functions that control route access</li>
+    <li><strong>Use with standalone routes</strong> via <code>provideRouter</code></li>
+    <li>Protect routes dynamically at runtime</li>
+    <li>Can be used for auth, role checks, unsaved forms, lazy load control</li>
+  </ul>
+
+  <hr>
+
+  <h2>✅ Want More?</h2>
+
+  <ul>
+    <li>Guard with role-based permissions?</li>
+    <li>CanActivateChild + nested routes?</li>
+    <li>Resolve data before loading routes?</li>
+  </ul>
+
+  <p>Let me know, and I’ll expand the tutorial!</p>
+</div>

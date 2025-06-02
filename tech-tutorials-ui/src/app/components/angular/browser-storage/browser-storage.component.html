@@ -1,1 +1,191 @@
-<p>browser-storage works!</p>
+<div id="container">
+  <h1>🗃️ Browser Storage Mechanisms – Full Tutorial</h1>
+
+  <p>
+    Web browsers provide several ways to store data on the client side. These include:
+  </p>
+  <ul>
+    <li><strong>localStorage</strong></li>
+    <li><strong>sessionStorage</strong></li>
+    <li><strong>Cookies</strong></li>
+    <li><strong>IndexedDB</strong></li>
+  </ul>
+
+  <hr>
+
+  <h2>📦 1. localStorage</h2>
+
+  <p>
+    Stores data with no expiration time. Available even after browser restarts.
+  </p>
+
+  <code>
+    // Set item
+    localStorage.setItem("username", "John");
+
+    // Get item
+    let user = localStorage.getItem("username");
+
+    // Remove item
+    localStorage.removeItem("username");
+
+    // Clear all
+    localStorage.clear();
+  </code>
+
+  <p><strong>Storage Limit:</strong> ~5MB</p>
+
+  <hr>
+
+  <h2>📦 2. sessionStorage</h2>
+
+  <p>
+    Same API as <code>localStorage</code>, but data is cleared when tab/window is closed.
+  </p>
+
+  <code>
+    sessionStorage.setItem("session", "active");
+    let state = sessionStorage.getItem("session");
+  </code>
+
+  <p><strong>Use Case:</strong> Temp data, page navigation states</p>
+
+  <hr>
+
+  <h2>🍪 3. Cookies</h2>
+
+  <p>
+    Used for small data, especially server-side readable data (like auth tokens).
+  </p>
+
+  <code>
+    // Set cookie
+    document.cookie = "user=Jane; expires=Fri, 31 Dec 2025 12:00:00 UTC; path=/";
+
+    // Read cookie
+    console.log(document.cookie);
+
+    // Delete cookie (set past expiry)
+    document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
+  </code>
+
+  <p><strong>Size Limit:</strong> ~4KB per cookie</p>
+  <p><strong>Security:</strong> Can use <code>Secure</code> and <code>HttpOnly</code> flags (from server)</p>
+
+  <hr>
+
+  <h2>🗄️ 4. IndexedDB</h2>
+
+  <p>
+    A low-level API for storing large structured data (objects, files). Async and powerful.
+  </p>
+
+  <code>
+    // Open DB
+    let request = indexedDB.open("MyDatabase", 1);
+
+    // Create store
+    request.onupgradeneeded = function(event) &#123;
+    let db = event.target.result;
+    db.createObjectStore("users", &#123; keyPath: "id" &#125;);
+    &#125;;
+
+    // Add data
+    request.onsuccess = function(event) &#123;
+    let db = event.target.result;
+    let tx = db.transaction("users", "readwrite");
+    let store = tx.objectStore("users");
+    store.add(&#123; id: 1, name: "Alice" &#125;);
+    &#125;;
+  </code>
+
+  <p><strong>Use Case:</strong> Offline apps, large object storage</p>
+
+  <hr>
+
+  <h2>📊 Comparison Table</h2>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Feature</th>
+      <th>localStorage</th>
+      <th>sessionStorage</th>
+      <th>Cookies</th>
+      <th>IndexedDB</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>Size Limit</td>
+      <td>~5MB</td>
+      <td>~5MB</td>
+      <td>~4KB</td>
+      <td>Hundreds of MBs</td>
+    </tr>
+    <tr>
+      <td>Expiration</td>
+      <td>Manual</td>
+      <td>On tab close</td>
+      <td>Set manually</td>
+      <td>Manual</td>
+    </tr>
+    <tr>
+      <td>Accessible by JS</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes (except HttpOnly)</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Server Access</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes (sent with requests)</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Async?</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Best For</td>
+      <td>Persistent small data</td>
+      <td>Temporary data</td>
+      <td>Server comm (auth)</td>
+      <td>Offline, large data</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <h2>🔐 Security Tips</h2>
+
+  <ul>
+    <li>Never store sensitive data (passwords, tokens) in <code>localStorage</code></li>
+    <li>Use <code>HttpOnly</code> & <code>Secure</code> flags for cookies</li>
+    <li>Use HTTPS to protect all data storage operations</li>
+    <li>Use encryption before storing critical data</li>
+  </ul>
+
+  <div class="note">
+    ⚠️ <strong>localStorage</strong> and <strong>sessionStorage</strong> are accessible via JavaScript and vulnerable to XSS. Avoid using them for authentication tokens without protection.
+  </div>
+
+  <hr>
+
+  <h2>📚 Summary</h2>
+
+  <ul>
+    <li><strong>localStorage</strong> – Persistent key/value storage</li>
+    <li><strong>sessionStorage</strong> – Temporary tab storage</li>
+    <li><strong>Cookies</strong> – Server-readable data, limited size</li>
+    <li><strong>IndexedDB</strong> – Complex, structured large storage</li>
+  </ul>
+
+  <p>Each has its ideal use case depending on your app’s needs!</p>
+</div>

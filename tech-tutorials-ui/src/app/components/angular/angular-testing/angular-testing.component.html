@@ -1,0 +1,225 @@
+<div id="container">
+  <h1>🧪 Angular Testing – Complete Tutorial</h1>
+
+  <p>
+    Angular provides built-in tools for testing components, services, pipes, and other units of code using Jasmine and Karma.
+    Testing improves code reliability and helps catch bugs early.
+  </p>
+
+  <hr>
+
+  <h2>📦 Testing Environment Setup</h2>
+
+  <p>Angular CLI comes with Karma and Jasmine pre-configured. Tests go in files ending with <code>.spec.ts</code>.</p>
+
+  <code>
+    ng test      // run unit tests<br>
+    ng test --code-coverage   // run tests + coverage report
+  </code>
+
+  <hr>
+
+  <h2>🧩 1. Component Unit Test</h2>
+
+  <p><strong>counter.component.ts</strong></p>
+  <code>
+    import &#123; Component &#125; from '&#64;angular/core';
+
+    &#64;Component(&#123;
+      selector: 'app-counter',
+      standalone: true,
+      template: `
+    &lt;h1&gt;Counter: <p ngNonBindable>{{ count }}</p>&lt;/h1&gt;
+      &lt;button (click)="increment()"&gt;+&lt;/button&gt;
+      `
+      &#125;)
+    export class CounterComponent &#123;
+    count = 0;
+    increment() &#123;
+    this.count++;
+    &#125;
+    &#125;
+  </code>
+
+  <p><strong>counter.component.spec.ts</strong></p>
+  <code>
+    import &#123; ComponentFixture, TestBed &#125; from '&#64;angular/core/testing';
+    import &#123; CounterComponent &#125; from './counter.component';
+
+    describe('CounterComponent', () =&gt; &#123;
+    let fixture: ComponentFixture&lt;CounterComponent&gt;;
+  let component: CounterComponent;
+
+  beforeEach(() =&gt; &#123;
+    TestBed.configureTestingModule(&#123;
+    imports: [CounterComponent] // standalone component
+    &#125;);
+
+    fixture = TestBed.createComponent(CounterComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    &#125;);
+
+  it('should start at 0', () =&gt; &#123;
+    expect(component.count).toBe(0);
+    &#125;);
+
+  it('should increment when button clicked', () =&gt; &#123;
+    const button = fixture.nativeElement.querySelector('button');
+    button.click();
+    fixture.detectChanges();
+    expect(component.count).toBe(1);
+    &#125;);
+    &#125;);
+  </code>
+
+  <hr>
+
+  <h2>🔧 2. Service Testing</h2>
+
+  <p><strong>math.service.ts</strong></p>
+  <code>
+    import &#123; Injectable &#125; from '&#64;angular/core';
+
+    &#64;Injectable(&#123; providedIn: 'root' &#125;)
+    export class MathService &#123;
+    add(a: number, b: number): number &#123;
+    return a + b;
+    &#125;
+    &#125;
+  </code>
+
+  <p><strong>math.service.spec.ts</strong></p>
+  <code>
+    import &#123; TestBed &#125; from '&#64;angular/core/testing';
+    import &#123; MathService &#125; from './math.service';
+
+    describe('MathService', () =&gt; &#123;
+    let service: MathService;
+
+    beforeEach(() =&gt; &#123;
+    TestBed.configureTestingModule(&#123;&#125;);
+    service = TestBed.inject(MathService);
+    &#125;);
+
+  it('should add two numbers', () =&gt; &#123;
+    expect(service.add(2, 3)).toBe(5);
+    &#125;);
+    &#125;);
+  </code>
+
+  <hr>
+
+  <h2>🌐 3. HTTP Service Testing</h2>
+
+  <p><strong>api.service.ts</strong></p>
+  <code>
+    import &#123; HttpClient &#125; from '&#64;angular/common/http';
+    import &#123; Injectable &#125; from '&#64;angular/core';
+
+    &#64;Injectable(&#123; providedIn: 'root' &#125;)
+    export class ApiService &#123;
+    constructor(private http: HttpClient) &#123;&#125;
+    getUsers() &#123;
+    return this.http.get('/api/users');
+    &#125;
+    &#125;
+  </code>
+
+  <p><strong>api.service.spec.ts</strong></p>
+  <code>
+    import &#123; TestBed &#125; from '&#64;angular/core/testing';
+    import &#123; HttpClientTestingModule, HttpTestingController &#125; from '&#64;angular/common/http/testing';
+    import &#123; ApiService &#125; from './api.service';
+
+    describe('ApiService', () =&gt; &#123;
+    let service: ApiService;
+    let httpMock: HttpTestingController;
+
+    beforeEach(() =&gt; &#123;
+    TestBed.configureTestingModule(&#123;
+    imports: [HttpClientTestingModule],
+    providers: [ApiService]
+    &#125;);
+    service = TestBed.inject(ApiService);
+    httpMock = TestBed.inject(HttpTestingController);
+    &#125;);
+
+  it('should fetch users', () =&gt; &#123;
+    const mockUsers = [&#123; id: 1, name: 'John' &#125;];
+    service.getUsers().subscribe(data =&gt; &#123;
+    expect(data).toEqual(mockUsers);
+    &#125;);
+
+    const req = httpMock.expectOne('/api/users');
+    expect(req.request.method).toBe('GET');
+    req.flush(mockUsers);
+    &#125;);
+
+  afterEach(() =&gt; &#123;
+    httpMock.verify();
+    &#125;);
+    &#125;);
+  </code>
+
+  <hr>
+
+  <h2>✅ Best Practices</h2>
+
+  <ul>
+    <li>Test logic in services, not components</li>
+    <li>Use test doubles/mocks instead of real dependencies</li>
+    <li>Use <code>TestBed</code> to configure the testing module</li>
+    <li>Keep tests fast, isolated, and readable</li>
+  </ul>
+
+  <hr>
+
+  <h2>📂 Project Structure</h2>
+
+  <pre>
+src/
+├── app/
+│   ├── components/
+│   │   └── example.component.ts
+│   │   └── example.component.spec.ts
+│   ├── services/
+│   │   └── api.service.ts
+│   │   └── api.service.spec.ts
+</pre>
+
+  <hr>
+
+  <h2>📚 Summary</h2>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Test Type</th>
+      <th>Description</th>
+      <th>Tool</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>Unit Test</td>
+      <td>Tests a single unit (e.g., function, component)</td>
+      <td>Jasmine + Karma</td>
+    </tr>
+    <tr>
+      <td>Integration Test</td>
+      <td>Tests multiple units together</td>
+      <td>Jasmine + mocks</td>
+    </tr>
+    <tr>
+      <td>End-to-End</td>
+      <td>Tests whole app behavior</td>
+      <td>Protractor / Cypress</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    ✅ Jasmine is the default testing framework, but you can also use Jest or Mocha with Angular.
+  </div>
+</div>

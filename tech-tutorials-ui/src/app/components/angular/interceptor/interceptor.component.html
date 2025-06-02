@@ -1,1 +1,167 @@
-<p>interceptor works!</p>
+<div id="container">
+  <h1>🔄 Angular 19 HTTP Interceptors Full Tutorial</h1>
+
+  <p>
+    HTTP Interceptors in Angular are powerful tools that allow us to inspect, transform, or log HTTP requests and responses globally.
+    They are ideal for:
+  </p>
+  <ul>
+    <li>Adding authentication tokens</li>
+    <li>Logging requests and responses</li>
+    <li>Handling errors globally</li>
+  </ul>
+
+  <hr>
+
+  <h2>💡 What is an HTTP Interceptor?</h2>
+  <p>
+    An HTTP Interceptor is a class that implements <code>HttpInterceptor</code>. It runs before and after every HTTP request made by Angular's <code>HttpClient</code>.
+  </p>
+
+  <code>
+    export interface HttpInterceptor &#123;
+    intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt;;
+    &#125;
+  </code>
+
+  <hr>
+
+  <h2>🧱 Creating an Interceptor in Angular 19</h2>
+
+  <p><strong>1. Token Interceptor Example</strong></p>
+  <code>
+    import &#123; Injectable &#125; from '&#64;angular/core';<br>
+    import &#123; HttpInterceptor, HttpRequest, HttpHandler, HttpEvent &#125; from '&#64;angular/common/http';<br>
+    import &#123; Observable &#125; from 'rxjs';
+
+    &#64;Injectable()
+    export class TokenInterceptor implements HttpInterceptor &#123;
+    intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt; &#123;
+    const token = localStorage.getItem('token');
+
+    if (token) &#123;
+    const cloned = req.clone(&#123;
+    headers: req.headers.set('Authorization', `Bearer $&#123;token&#125;`)
+    &#125;);
+      return next.handle(cloned);
+    &#125;
+
+    return next.handle(req);
+    &#125;
+    &#125;
+  </code>
+
+  <p><strong>2. Error Handling Interceptor</strong></p>
+  <code>
+    import &#123; Injectable &#125; from '&#64;angular/core';<br>
+    import &#123; HttpInterceptor, HttpRequest, HttpHandler, HttpErrorResponse &#125; from '&#64;angular/common/http';<br>
+    import &#123; Observable, catchError, throwError &#125; from 'rxjs';
+
+    &#64;Injectable()
+    export class ErrorInterceptor implements HttpInterceptor &#123;
+    intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;any&gt; &#123;
+    return next.handle(req).pipe(
+    catchError((error: HttpErrorResponse) =&gt; &#123;
+    alert(`Error: $&#123;error.status&#125; - $&#123;error.message&#125;`);
+        return throwError(() =&gt; error);
+    &#125;)
+    );
+    &#125;
+    &#125;
+  </code>
+
+  <hr>
+
+  <h2>⚙️ Providing Interceptors in Angular 19</h2>
+
+  <p><strong>Angular 15+ supports functional providers with <code>withInterceptors()</code>.</strong></p>
+
+  <p><strong>main.ts:</strong></p>
+  <code>
+    import &#123; bootstrapApplication &#125; from '&#64;angular/platform-browser';<br>
+    import &#123; AppComponent &#125; from './app/app.component';<br>
+    import &#123; provideHttpClient, withInterceptors &#125; from '&#64;angular/common/http';<br>
+    import &#123; TokenInterceptor &#125; from './app/interceptors/token.interceptor';<br>
+    import &#123; ErrorInterceptor &#125; from './app/interceptors/error.interceptor';
+
+    bootstrapApplication(AppComponent, &#123;
+    providers: [
+      provideHttpClient(
+        withInterceptors([
+          TokenInterceptor,
+          ErrorInterceptor
+        ])
+      )
+    ]
+    &#125;);
+  </code>
+
+  <hr>
+
+  <h2>📋 Interceptor Order Matters</h2>
+  <p>
+    If you use multiple interceptors, they're called in the order you register them. Responses flow back in reverse.
+  </p>
+
+  <code>
+    // Request: TokenInterceptor → ErrorInterceptor → HTTP call
+    // Response: HTTP call → ErrorInterceptor → TokenInterceptor
+  </code>
+
+  <hr>
+
+  <h2>📌 Interceptor Use Cases</h2>
+
+  <ul>
+    <li><strong>Authentication:</strong> Add Authorization headers (JWT)</li>
+    <li><strong>Error Handling:</strong> Catch 401, 500 responses globally</li>
+    <li><strong>Loading Spinner:</strong> Start spinner on request, stop on response</li>
+    <li><strong>Logging:</strong> Log all outgoing/incoming traffic</li>
+  </ul>
+
+  <hr>
+
+  <h2>✅ Summary</h2>
+
+  <ul>
+    <li>Interceptors sit between your app and the server</li>
+    <li>They can modify requests, responses, or errors</li>
+    <li>Register interceptors using <code>provideHttpClient(withInterceptors([]))</code></li>
+    <li>Great for tokens, global errors, analytics</li>
+  </ul>
+
+  <hr>
+
+  <h2>📦 Bonus: Full Token Interceptor with Expiry Check</h2>
+  <code>
+    intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt; &#123;
+    const token = localStorage.getItem('token');
+    const isExpired = false; // use JWT decode lib to check expiry
+
+    if (token && !isExpired) &#123;
+    const cloned = req.clone(&#123;
+    headers: req.headers.set('Authorization', 'Bearer ' + token)
+    &#125;);
+    return next.handle(cloned);
+    &#125;
+
+    return next.handle(req);
+    &#125;
+  </code>
+
+  <div class="note">
+    ✅ You can use libraries like <code>jwt-decode</code> to decode and verify token expiry before sending.
+  </div>
+
+  <hr>
+
+  <h2>💬 Need more?</h2>
+  <p>
+    Let me know if you'd like to add:
+  </p>
+  <ul>
+    <li>Logging Interceptor</li>
+    <li>Spinner Interceptor (with loading state)</li>
+    <li>Unit tests for interceptors</li>
+  </ul>
+</div>

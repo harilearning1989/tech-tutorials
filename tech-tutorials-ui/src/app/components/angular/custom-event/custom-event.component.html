@@ -1,1 +1,182 @@
-<p>custom-event works!</p>
+<div id="container">
+  <h1>🔁 Angular 19 Custom Event Tutorial (Standalone)</h1>
+
+  <p>
+    In Angular, components can <strong>communicate with each other</strong>.
+    A common pattern is for a <strong>child component</strong> to emit a <strong>custom event</strong>
+    that the <strong>parent component</strong> listens to.
+  </p>
+
+  <p>
+    In Angular 19 standalone apps, the pattern remains the same using the <code>&#64;Output()</code>
+    decorator and <code>EventEmitter</code>.
+  </p>
+
+  <hr>
+
+  <h2>📘 Step 1: Create the Child Component (Emits Custom Event)</h2>
+  <p><strong>File:</strong> <code>src/app/components/child.component.ts</code></p>
+
+  <code>
+    <pre>
+      <code>
+    import &#123; Component, Output, EventEmitter &#125; from '&#64;angular/core';
+    import &#123; CommonModule &#125; from '&#64;angular/common';
+
+    &#64;Component(&#123;
+      selector: 'app-child',
+      standalone: true,
+      imports: [CommonModule],
+      template: `
+      &lt;h3&gt;Child Component&lt;/h3&gt;
+      &lt;button (click)="sendMessage()"&gt;Send Message to Parent&lt;/button&gt;
+      `
+      &#125;)
+    export class ChildComponent &#123;
+    &#64;Output() message = new EventEmitter&lt;string&gt;();
+
+      sendMessage() &#123;
+        this.message.emit("Hello from the Child!");
+      &#125;
+    &#125;
+    </code></pre>
+  </code>
+
+  <ul>
+    <li><code>&#64;Output()</code> creates a custom event.</li>
+    <li><code>message</code> is the name of the event.</li>
+    <li>When the button is clicked, the event is emitted with a message.</li>
+  </ul>
+
+  <hr>
+
+  <h2>🧩 Step 2: Create the Parent Component (Handles Custom Event)</h2>
+  <p><strong>File:</strong> <code>src/app/components/parent.component.ts</code></p>
+
+  <code>
+    <pre>
+      <code>
+          import &#123; Component &#125; from '&#64;angular/core';
+          import &#123; CommonModule &#125; from '&#64;angular/common';
+          import &#123; ChildComponent &#125; from './child.component';
+
+          &#64;Component(&#123;
+            selector: 'app-parent',
+            standalone: true,
+            imports: [CommonModule, ChildComponent],
+            template: `
+            &lt;h2&gt;Parent Component&lt;/h2&gt;
+            &lt;p&gt;Message from child: <p ngNonBindable>
+            {{ childMessage }}</p>
+            &lt;/p&gt;
+
+            &lt;app-child (message)="receiveMessage($event)"&gt;&lt;/app-child&gt;
+            `
+            &#125;)
+          export class ParentComponent &#123;
+          childMessage = '';
+
+            receiveMessage(message: string) &#123;
+              this.childMessage = message;
+            &#125;
+          &#125;
+      </code></pre>
+  </code>
+
+  <ul>
+    <li><code>(message)="receiveMessage($event)"</code> listens for the child’s event.</li>
+    <li>The <code>$event</code> contains the data emitted by the child.</li>
+  </ul>
+
+  <hr>
+
+  <h2>🎯 Step 3: App Component (Bootstrap Entry)</h2>
+  <p><strong>File:</strong> <code>src/app/app.component.ts</code></p>
+
+  <code>
+    <pre>
+      <code>
+    import &#123; Component &#125; from '&#64;angular/core';
+    import &#123; ParentComponent &#125; from './components/parent.component';
+
+    &#64;Component(&#123;
+      selector: 'app-root',
+      standalone: true,
+      imports: [ParentComponent],
+      template: `&lt;app-parent&gt;&lt;/app-parent&gt;`
+      &#125;)
+    export class AppComponent &#123;&#125;
+      </code>
+    </pre>
+  </code>
+
+  <hr>
+
+  <h2>🚀 Step 4: Main Entry Point</h2>
+  <p><strong>File:</strong> <code>src/main.ts</code></p>
+
+  <code>
+    <pre>
+      <code>
+    import &#123; bootstrapApplication &#125; from '&#64;angular/platform-browser';
+    import &#123; AppComponent &#125; from './app/app.component';
+
+    bootstrapApplication(AppComponent)
+    .catch(err =&gt; console.error(err));
+      </code>
+    </pre>
+  </code>
+
+  <hr>
+
+  <h2>📁 Project Structure Overview</h2>
+
+  <code>
+    src/<br>
+    ├── app/<br>
+    │   ├── components/<br>
+    │   │   ├── child.component.ts<br>
+    │   │   ├── parent.component.ts<br>
+    │   └── app.component.ts<br>
+    └── main.ts
+  </code>
+
+  <hr>
+
+  <h2>🧠 Key Angular 19 Concepts Used</h2>
+
+  <ul>
+    <li><strong>Standalone Components:</strong> All components use <code>standalone: true</code>.</li>
+    <li><strong>&#64;Output & EventEmitter:</strong> For emitting custom events from child to parent.</li>
+    <li><strong>$event:</strong> The special template variable containing the emitted data.</li>
+    <li><strong>Bootstrap without NgModules:</strong> Using <code>bootstrapApplication</code>.</li>
+  </ul>
+
+  <hr>
+
+  <h2>▶️ Run the App</h2>
+  <code>
+    npm install -g &#64;angular/cli<br>
+    ng new angular19-custom-event-demo --standalone<br>
+    cd angular19-custom-event-demo<br>
+    <span style="color: #888;"># Replace files with the above code</span><br>
+    ng serve
+  </code>
+
+  <hr>
+
+  <h2>✅ Summary</h2>
+
+  <p>
+    You now understand how to use <strong>custom events</strong> in Angular 19 with standalone components:
+  </p>
+
+  <ol>
+    <li>Create a child component with <code>&#64;Output()</code></li>
+    <li>Emit data with <code>EventEmitter</code></li>
+    <li>Handle the event in the parent component using <code>(eventName)</code> binding</li>
+  </ol>
+
+  <p><strong>Congratulations! 🎉 You've completed a full Angular 19 custom event tutorial.</strong></p>
+
+</div>

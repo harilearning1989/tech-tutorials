@@ -1,1 +1,232 @@
-<p>services works!</p>
+<div id="container">
+  <h2>🔧 Angular 19 Services Tutorial (Using Standalone APIs)</h2>
+
+  <p>
+    Angular 19 fully embraces <strong>standalone components</strong>. This means we no longer need to define <code>NgModules</code>.
+    In this tutorial, we will explore what Angular services are, how to create and use them, and how they work in a
+    <strong>module-less Angular 19 app</strong>.
+  </p>
+
+  <hr>
+
+  <h2>📘 What is a Service in Angular?</h2>
+
+  <p>
+    A <strong>service</strong> is a class in Angular that provides logic or data that can be shared across components.
+    Services are used to:
+  </p>
+
+  <ul>
+    <li>Share data between components</li>
+    <li>Handle business logic</li>
+    <li>Make HTTP requests</li>
+    <li>Access browser APIs</li>
+  </ul>
+
+  <p>
+    Services are typically decorated with <code>&#64;Injectable()</code>, and registered with Angular’s dependency
+    injection system.
+  </p>
+
+  <hr>
+
+  <h2>🛠️ Step 1: Creating the Service</h2>
+
+  <p><strong>File:</strong> <code>src/app/services/data.service.ts</code></p>
+
+  <code>
+    <span class="comment">
+      // Import the Injectable decorator</span>
+
+    <pre><code>import &#123; Injectable &#125; from '&#64;angular/core';</code></pre>
+
+
+    <span class="comment">// The service is provided at the root level (app-wide singleton)</span>
+    <pre><code>
+      &#64;Injectable(&#123;
+        providedIn: 'root'
+      &#125;)
+      export class DataService &#123;
+      private data: string[] = [];
+
+      constructor() &#123;&#125;
+
+      addItem(item: string) &#123;
+        this.data.push(item);
+      &#125;
+
+      getItems(): string[] &#123;
+        return this.data;
+      &#125;
+    &#125;
+    </code></pre>
+
+  </code>
+
+  <p>
+    This service defines a private array and methods to add and retrieve data. It's registered globally using <code>providedIn:
+    'root'</code>, so it's automatically available everywhere in the app.
+  </p>
+
+  <hr>
+
+  <h2>🧩 Step 2: Using the Service in a Standalone Component</h2>
+
+  <p><strong>File:</strong> <code>src/app/components/data-view.component.ts</code></p>
+  <code>
+  <pre>
+  <code>
+    import &#123; Component &#125; from '&#64;angular/core';
+    import &#123; CommonModule &#125; from '&#64;angular/common';
+    import &#123; FormsModule &#125; from '&#64;angular/forms';
+    import &#123; DataService &#125; from '../services/data.service';
+
+    &#64;Component(&#123;
+    selector: 'app-data-view',
+    standalone: true,
+    imports: [CommonModule, FormsModule],
+    template: `
+    &lt;h2&gt;Service Example&lt;/h2&gt;
+    &lt;input [(ngModel)]="item" placeholder="Enter item" /&gt;
+    &lt;button (click)="addItem()"&gt;Add&lt;/button&gt;
+
+    &lt;ul&gt;
+    &lt;li *ngFor="let i of items"&gt;<p ngNonBindable>{{ i }}</p>&lt;/li&gt;
+    &lt;/ul&gt;
+    `
+    &#125;)
+    export class DataViewComponent &#123;
+    item = '';
+    items: string[] = [];
+
+    constructor(private dataService: DataService) &#123;&#125;
+
+    addItem() &#123;
+      this.dataService.addItem(this.item);
+      this.item = '';
+      this.items = this.dataService.getItems();
+    &#125;
+
+    ngOnInit() &#123;
+      this.items = this.dataService.getItems();
+    &#125;
+    &#125;
+  </code>
+  </pre>
+  </code>
+
+  <p>
+    In this component, we inject the <code>DataService</code> via the constructor. We bind an input field to
+    <code>item</code> and call <code>addItem()</code> on button click. The list displays all added items.
+  </p>
+
+  <hr>
+
+  <h2>🎯 Step 3: App Component (Bootstrapping)</h2>
+
+  <p><strong>File:</strong> <code>src/app/app.component.ts</code></p>
+
+  <code>
+    <pre>
+      <code>
+        import &#123; Component &#125; from '&#64;angular/core';
+        import &#123; DataViewComponent &#125; from './components/data-view.component';
+
+        &#64;Component(&#123;
+        selector: 'app-root',
+        standalone: true,
+        imports: [DataViewComponent],
+        template: `&lt;app-data-view /&gt;`
+        &#125;)
+        export class AppComponent &#123;&#125;
+      </code>
+    </pre>
+  </code>
+
+  <p>
+    This is the root component. It's also a standalone component, and it simply displays the
+    <code>&lt;app-data-view&gt;</code> component.
+  </p>
+
+  <hr>
+
+  <h2>🚀 Step 4: Main Entry File</h2>
+
+  <p><strong>File:</strong> <code>src/main.ts</code></p>
+
+  <code>
+    <pre>
+      <code>
+      import &#123; bootstrapApplication &#125; from '&#64;angular/platform-browser';
+      import &#123; AppComponent &#125; from './app/app.component';
+
+      bootstrapApplication(AppComponent)
+      .catch(err =&gt; console.error(err));
+      </code>
+    </pre>
+
+  </code>
+
+  <p>
+    Angular 19 apps use <code>bootstrapApplication()</code> instead of modules to start the app.
+  </p>
+
+  <hr>
+
+  <h2>📁 Suggested Project Structure</h2>
+
+  <code>
+    src/<br>
+    ├── app/<br>
+    │ ├── services/<br>
+    │ │ └── data.service.ts<br>
+    │ ├── components/<br>
+    │ │ └── data-view.component.ts<br>
+    │ └── app.component.ts<br>
+    └── main.ts
+  </code>
+
+  <hr>
+
+  <h2>🧠 Key Angular 19 Concepts</h2>
+
+  <ul>
+    <li><strong>Standalone Component:</strong> Declared with <code>standalone: true</code>, no NgModule needed.</li>
+    <li><strong>Service Injection:</strong> Works the same, but no module registration is required when <code>providedIn:
+      'root'</code>.
+    </li>
+    <li><strong>Bootstrap:</strong> Uses <code>bootstrapApplication()</code> instead of AppModule.</li>
+    <li><strong>Component Imports:</strong> Each component explicitly imports its dependencies like
+      <code>FormsModule</code>, <code>CommonModule</code>, etc.
+    </li>
+  </ul>
+
+  <hr>
+
+  <h2>▶️ Running the App</h2>
+  <p>Use Angular CLI to run the app:</p>
+
+  <code>
+    npm install -g &#64;angular/cli<br>
+    ng new angular-19-service-demo --standalone<br>
+    cd angular-19-service-demo<br>
+    <span class="comment"># Replace the contents with the files shown above</span><br>
+    ng serve
+  </code>
+
+  <hr>
+
+  <h2>✅ Summary</h2>
+  <p>
+    Angular 19 simplifies application structure using <strong>standalone components</strong>. Services work the same as
+    before, but now you don’t need NgModules to use them. This tutorial showed how to:
+  </p>
+  <ul>
+    <li>Create a reusable service</li>
+    <li>Inject the service in a standalone component</li>
+    <li>Bootstrap the application without modules</li>
+  </ul>
+
+  <p><strong>You're now ready to use Angular 19 services in real-world apps!</strong></p>
+
+</div>

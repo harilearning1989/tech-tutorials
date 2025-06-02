@@ -1,0 +1,178 @@
+<div id="container">
+  <h1>🎯 Angular Linting & Formatting Guide</h1>
+
+  <p>
+    Linting and formatting help maintain consistent code style, detect errors early, and improve developer collaboration.
+    Angular supports ESLint, Prettier, and other tools.
+  </p>
+
+  <hr>
+
+  <h2>🔍 What is Linting?</h2>
+
+  <p>Linting analyzes your code for potential issues:</p>
+  <ul>
+    <li>Code style violations</li>
+    <li>Potential bugs</li>
+    <li>Deprecated syntax</li>
+  </ul>
+
+  <h2>🎨 What is Formatting?</h2>
+
+  <p>Formatting ensures consistent spacing, indentation, and alignment across your codebase.</p>
+
+  <hr>
+
+  <h2>🛠️ Step 1: Setup ESLint in Angular</h2>
+
+  <p><strong>Install ESLint:</strong></p>
+  <code>
+    ng add &#64;angular-eslint/schematics
+  </code>
+
+  <p>This will:</p>
+  <ul>
+    <li>Remove TSLint if present</li>
+    <li>Install ESLint dependencies</li>
+    <li>Generate <code>.eslintrc.json</code></li>
+  </ul>
+
+  <h3>📄 .eslintrc.json</h3>
+  <code>
+    &#123;
+      "root": true,
+      "overrides": [
+        &#123;
+          "files": ["*.ts"],
+          "extends": ["plugin:&#64;angular-eslint/recommended"],
+          "rules": &#123;
+            "&#64;typescript-eslint/no-unused-vars": "warn"
+          &#125;
+        &#125;,
+      &#123;
+        "files": ["*.html"],
+          "extends": ["plugin:&#64;angular-eslint/template/recommended"],
+          "rules": &#123;&#125;
+        &#125;
+      ]
+      &#125;
+  </code>
+
+  <p>Configure rules as per your team’s style guide.</p>
+
+  <hr>
+
+  <h2>🎯 Step 2: Add Prettier (Optional but Recommended)</h2>
+
+  <code>
+    npm install --save-dev prettier eslint-config-prettier
+  </code>
+
+  <h3>📄 .prettierrc</h3>
+  <code>
+    &#123;
+    "singleQuote": true,
+    "semi": true,
+    "trailingComma": "all",
+    "printWidth": 100
+    &#125;
+  </code>
+
+  <h3>📄 .eslintignore</h3>
+  <code>
+    dist/
+    node_modules/
+    coverage/
+  </code>
+
+  <h3>📄 .prettierignore</h3>
+  <code>
+    dist/
+    node_modules/
+    coverage/
+  </code>
+
+  <hr>
+
+  <h2>📦 Step 3: Add NPM Scripts</h2>
+
+  <p><strong>In <code>package.json</code>:</strong></p>
+  <code>
+    "scripts": &#123;
+    "lint": "ng lint",
+    "format": "prettier --write \"src/**/*.&#123;ts,html,scss&#125;\"",
+  "lint:fix": "ng lint --fix"
+    &#125;
+  </code>
+
+  <hr>
+
+  <h2>✅ Commands Summary</h2>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Command</th>
+      <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><code>ng lint</code></td>
+      <td>Lint TypeScript and HTML files</td>
+    </tr>
+    <tr>
+      <td><code>ng lint --fix</code></td>
+      <td>Auto-fix lint issues</td>
+    </tr>
+    <tr>
+      <td><code>npm run format</code></td>
+      <td>Apply Prettier formatting</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <h2>💡 Best Practices</h2>
+  <ul>
+    <li>Use Prettier for formatting, ESLint for rules</li>
+    <li>Run <code>lint</code> and <code>format</code> before commits</li>
+    <li>Use Husky + Lint-Staged for pre-commit hooks</li>
+    <li>Share configs across teams via an internal npm package</li>
+  </ul>
+
+  <hr>
+
+  <h2>🔐 Husky + Lint-Staged (Optional)</h2>
+
+  <code>
+    npm install --save-dev husky lint-staged
+    npx husky install
+  </code>
+
+  <p><strong>In package.json</strong></p>
+  <code>
+    "lint-staged": &#123;
+    "src/**/*.&#123;ts,html,scss&#125;": [
+    "prettier --write",
+    "ng lint --fix"
+  ]
+    &#125;
+  </code>
+
+  <hr>
+
+  <h2>📚 Summary</h2>
+
+  <ul>
+    <li>ESLint replaces deprecated TSLint</li>
+    <li>Prettier formats code consistently</li>
+    <li>Use <code>ng lint</code> and <code>prettier --write</code> for code quality</li>
+    <li>Automate with scripts and Git hooks</li>
+  </ul>
+
+  <div class="note">
+    ⚠️ Angular 12+ defaults to ESLint for new projects using the community <code>&#64;angular-eslint</code> schematics.
+  </div>
+</div>
