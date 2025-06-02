@@ -1,1 +1,128 @@
-<p>directives works!</p>
+<div id="container">
+  <h1>Angular Directives Tutorial</h1>
+
+  <section>
+    <h2>What are Directives?</h2>
+    <p>In Angular, directives are classes that add behavior to elements in your Angular applications.</p>
+    <p>There are 3 types of directives:</p>
+    <ul>
+      <li><strong>Component Directives</strong> – Directives with a template (these are components)</li>
+      <li><strong>Structural Directives</strong> – Change the DOM layout (e.g. <code>*ngIf</code>, <code>*ngFor</code>)</li>
+      <li><strong>Attribute Directives</strong> – Change the appearance or behavior of an element (e.g. <code>ngClass</code>, <code>ngStyle</code>)</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Built-in Structural Directive Example</h2>
+    <pre><code>&lt;ul&gt;
+      &lt;li *ngFor="let item of items" &gt;<p ngNonBindable>{{ item }}</p>&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p *ngIf="isLoggedIn"&gt;Welcome back!&lt;/p&gt;</code></pre>
+  </section>
+
+  <section>
+    <h2>Built-in Attribute Directive Example</h2>
+    <pre><code>&lt;div [ngClass]="&#123; 'active': isActive &#125;"&gt;Status&lt;/div&gt;
+&lt;div [ngStyle]="&#123; 'color': isError ? 'red' : 'green' &#125;"&gt;Message&lt;/div&gt;</code></pre>
+  </section>
+
+  <section>
+    <h2>Creating a Custom Attribute Directive</h2>
+    <h2>ng g d highlight</h2>
+    <p>Let's build a directive that changes the background color of an element on hover.</p>
+    <pre><code>// src/app/highlight.directive.ts
+import &#123; Directive, ElementRef, HostListener, Input &#125; from '&#64;angular/core';
+
+      &#64;Directive(&#123;
+        selector: '[appHighlight]'
+        &#125;)
+      export class HighlightDirective &#123;
+      &#64;Input() highlightColor: string = 'yellow';
+
+      constructor(private el: ElementRef) &#123;&#125;
+
+  &#64;HostListener('mouseenter') onMouseEnter() &#123;
+    this.highlight(this.highlightColor || 'lightgray');
+  &#125;
+
+  &#64;HostListener('mouseleave') onMouseLeave() &#123;
+    this.highlight('');
+  &#125;
+
+  private highlight(color: string) &#123;
+    this.el.nativeElement.style.backgroundColor = color;
+  &#125;
+&#125;
+</code></pre>
+  </section>
+
+  <section>
+    <h2>Registering the Directive</h2>
+    <pre><code>// src/app/app.module.ts
+import &#123; NgModule &#125; from '&#64;angular/core';
+import &#123; BrowserModule &#125; from '&#64;angular/platform-browser';
+import &#123; AppComponent &#125; from './app.component';
+import &#123; HighlightDirective &#125; from './highlight.directive';
+
+      &#64;NgModule(&#123;
+        declarations: [
+        AppComponent,
+        HighlightDirective
+        ],
+        imports: [ BrowserModule ],
+        bootstrap: [ AppComponent ]
+        &#125;)
+      export class AppModule &#123; &#125;
+</code></pre>
+  </section>
+
+  <section>
+    <h2>Using the Custom Directive</h2>
+    <pre><code>&lt;p appHighlight highlightColor="lightblue"&gt;
+  Hover to highlight this paragraph!
+&lt;/p&gt;
+
+&lt;button appHighlight&gt;Hover me!&lt;/button&gt;</code></pre>
+  </section>
+
+  <section>
+    <h2>Creating a Custom Structural Directive</h2>
+    <p>This example creates a directive that only shows an element when a condition is false (opposite of <code>*ngIf</code>).</p>
+    <pre><code>// src/app/unless.directive.ts
+import &#123; Directive, Input, TemplateRef, ViewContainerRef &#125; from '&#64;angular/core';
+
+      &#64;Directive(&#123;
+        selector: '[appUnless]'
+        &#125;)
+      export class UnlessDirective &#123;
+      constructor(private templateRef: TemplateRef&lt;any&gt;, private viewContainer: ViewContainerRef) &#123;&#125;
+
+  &#64;Input() set appUnless(condition: boolean) &#123;
+    if (!condition) &#123;
+      this.viewContainer.createEmbeddedView(this.templateRef);
+    &#125; else &#123;
+      this.viewContainer.clear();
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+  </section>
+
+  <section>
+    <h2>Using the Custom Structural Directive</h2>
+    <pre><code>&lt;p *appUnless="isLoggedIn"&gt;
+  You must log in to continue.
+&lt;/p&gt;</code></pre>
+  </section>
+
+  <section>
+    <h2>Summary</h2>
+    <ul>
+      <li>Directives enhance HTML with custom behavior.</li>
+      <li>Structural directives modify the DOM layout.</li>
+      <li>Attribute directives change element appearance or behavior.</li>
+      <li>You can create custom directives using <code>&#64;Directive</code> and Angular's DOM APIs.</li>
+    </ul>
+  </section>
+</div>

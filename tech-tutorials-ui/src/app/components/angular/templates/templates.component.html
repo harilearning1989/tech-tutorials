@@ -1,1 +1,108 @@
-<p>templates works!</p>
+<div id="container">
+  <h1>Angular Templates Tutorial</h1>
+
+  <section>
+    <h2>What is a Template in Angular?</h2>
+    <p>
+      An Angular <strong>template</strong> is HTML combined with Angular directives and binding markup that tells
+      Angular how to render the component.
+    </p>
+    <p>
+      Templates are part of Angular components and define the user interface.
+    </p>
+  </section>
+
+  <section>
+    <h2>Basic Component Template Example</h2>
+    <pre><code>// app.component.ts
+      &#64;Component(&#123;
+  selector: 'app-root',
+  template: \`
+      &lt;h1&gt;<p ngNonBindable>{{ title }}</p>&lt;/h1&gt;
+    &lt;p&gt;Welcome to Angular Templates!&lt;/p&gt;
+        \`
+          &#125;)
+export class AppComponent &#123;
+      title = 'My Angular App';
+&#125;
+</code></pre>
+    <p>Or use an external HTML file:</p>
+    <pre><code>// app.component.ts
+      &#64;Component(&#123;
+        selector: 'app-root',
+        templateUrl: './app.component.html'
+        &#125;)
+      export class AppComponent &#123;
+      title = 'My Angular App';
+&#125;
+</code></pre>
+  </section>
+
+  <section>
+    <h2>Template Syntax Features</h2>
+    <ul>
+      <li><strong>Interpolation</strong>: <code><p ngNonBindable>{{ value }}</p></code></li>
+      <li><strong>Property Binding</strong>: <code>[property]="value"</code></li>
+      <li><strong>Event Binding</strong>: <code>(event)="handler()"</code></li>
+      <li><strong>Two-way Binding</strong>: <code>[(ngModel)]="value"</code></li>
+      <li><strong>Structural Directives</strong>: <code>*ngIf</code>, <code>*ngFor</code></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Example: Template with Bindings</h2>
+    <pre><code>&lt;input [(ngModel)]="username" placeholder="Enter name" /&gt;
+
+      <p ngNonBindable>Hello, {{ username }}</p>
+
+&lt;button (click)="reset()"&gt;Reset&lt;/button&gt;</code></pre>
+
+    <pre><code>// app.component.ts
+export class AppComponent &#123;
+      username = '';
+
+      reset() &#123;
+    this.username = '';
+  &#125;
+&#125;
+</code></pre>
+  </section>
+
+  <section>
+    <h2>Using Template Reference Variables</h2>
+    <pre><code>&lt;input #nameInput /&gt;
+&lt;button (click)="greet(nameInput.value)"&gt;Greet&lt;/button&gt;</code></pre>
+
+    <pre><code>// app.component.ts
+greet(name: string) &#123;
+      alert('Hello, ' + name + '!');
+&#125;
+</code></pre>
+  </section>
+
+  <section>
+    <h2>ng-template and ng-container</h2>
+    <p><code>&lt;ng-template&gt;</code> is used to define reusable or conditionally rendered templates.</p>
+    <pre><code>&lt;ng-template #loading&gt;
+  &lt;p&gt;Loading data...&lt;/p&gt;
+&lt;/ng-template&gt;
+
+&lt;div *ngIf="isLoading; else dataLoaded"&gt;
+  &lt;ng-container [ngTemplateOutlet]="loading"&gt;&lt;/ng-container&gt;
+&lt;/div&gt;
+
+&lt;ng-template #dataLoaded&gt;
+  &lt;p&gt;Data has been loaded!&lt;/p&gt;
+&lt;/ng-template&gt;</code></pre>
+  </section>
+
+  <section>
+    <h2>Best Practices</h2>
+    <ul>
+      <li>Keep templates clean and logic-free (move logic to the component).</li>
+      <li>Use external HTML files for large templates.</li>
+      <li>Use <code>ng-container</code> to group elements without creating extra DOM nodes.</li>
+      <li>Leverage <code>*ngIf</code>, <code>*ngFor</code> wisely to control rendering.</li>
+    </ul>
+  </section>
+</div>

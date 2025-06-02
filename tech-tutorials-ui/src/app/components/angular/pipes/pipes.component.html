@@ -1,1 +1,102 @@
-<p>pipes works!</p>
+<div id="container">
+  <h1>Angular Pipes Tutorial</h1>
+
+  <section>
+    <h2>What Are Pipes?</h2>
+    <p>
+      Pipes in Angular are used to transform data in templates. They take in data as input and transform it to a desired output format.
+    </p>
+    <p>Example of built-in pipes:</p>
+    <pre><code ngNonBindable>{{ today | date:'longDate' }}
+      {{ price | currency:'USD' }}
+      {{ title | uppercase }}</code></pre>
+  </section>
+
+  <section>
+    <h2>Common Built-in Pipes</h2>
+    <ul>
+      <li><code>date</code>: Formats date values</li>
+      <li><code>uppercase / lowercase</code>: Transforms string case</li>
+      <li><code>currency</code>: Formats currency</li>
+      <li><code>percent</code>: Converts a number to percentage</li>
+      <li><code>json</code>: Converts a value to JSON string</li>
+      <li><code>slice</code>: Returns a slice of an array or string</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Using Pipes in Templates</h2>
+    <p>Here's how you can use pipes in an Angular component template:</p>
+    <pre><code><p ngNonBindable>Today's Date: {{ today | date:'fullDate' }}</p>
+<p ngNonBindable>Price: {{ 1234.5 | currency:'EUR' }}</p>
+<p ngNonBindable>Text: {{ 'hello world' | uppercase }}</p></code></pre>
+  </section>
+
+  <section>
+    <h2>Creating a Custom Pipe</h2>
+    <p>To create a custom pipe, use the Angular CLI or create a class that implements <code>PipeTransform</code>.</p>
+    <h3>1. Pipe File</h3>
+    <pre><code>// src/app/pipes/exclaim.pipe.ts
+import &#123; Pipe, PipeTransform &#125; from '&#64;angular/core';
+
+      &#64;Pipe(&#123;
+        name: 'exclaim'
+        &#125;)
+      export class ExclaimPipe implements PipeTransform &#123;
+      transform(value: string, times: number = 1): string &#123;
+    return value + '!'.repeat(times);
+  &#125;
+&#125;
+</code></pre>
+
+    <h3>2. Declare Pipe in Module</h3>
+    <pre><code>// src/app/app.module.ts
+import &#123; NgModule &#125; from '&#64;angular/core';
+import &#123; BrowserModule &#125; from '&#64;angular/platform-browser';
+import &#123; AppComponent &#125; from './app.component';
+import &#123; ExclaimPipe &#125; from './pipes/exclaim.pipe';
+
+      &#64;NgModule(&#123;
+        declarations: [
+        AppComponent,
+        ExclaimPipe
+        ],
+        imports: [BrowserModule],
+        bootstrap: [AppComponent]
+        &#125;)
+      export class AppModule &#123;&#125;
+</code></pre>
+
+    <h3>3. Use the Pipe in Template</h3>
+    <pre><code><p ngNonBindable>{{ 'Angular is awesome' | exclaim:3 }}</p>
+      <!-- Output: Angular is awesome!!! -->
+</code></pre>
+  </section>
+
+  <section>
+    <h2>Pipe with Multiple Arguments</h2>
+    <p>Custom pipes can accept multiple arguments by adding more parameters to the transform method:</p>
+    <pre><code>// src/app/pipes/repeat.pipe.ts
+import &#123; Pipe, PipeTransform &#125; from '&#64;angular/core';
+
+      &#64;Pipe(&#123; name: 'repeat' &#125;)
+      export class RepeatPipe implements PipeTransform &#123;
+      transform(value: string, times: number = 2, separator: string = ' '): string &#123;
+    return Array(times).fill(value).join(separator);
+  &#125;
+&#125;
+</code></pre>
+    <p>Usage:</p>
+    <pre><code ngNonBindable>{{ 'Hi' | repeat:3:'-' }} <!-- Output: Hi-Hi-Hi --></code></pre>
+  </section>
+
+  <section>
+    <h2>Summary</h2>
+    <ul>
+      <li>Angular provides many useful built-in pipes.</li>
+      <li>You can create custom pipes to encapsulate complex formatting logic.</li>
+      <li>Custom pipes must be declared in a module and implement <code>PipeTransform</code>.</li>
+      <li>Pipes are a powerful way to keep templates clean and readable.</li>
+    </ul>
+  </section>
+</div>

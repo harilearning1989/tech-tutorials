@@ -1,1 +1,99 @@
-<p>dependency-injection works!</p>
+<div id="container">
+  <h2 class="bg-secondary">Angular Dependency Injection Tutorial</h2>
+
+  <section>
+    <h2>What is Dependency Injection?</h2>
+    <p>
+      Dependency Injection (DI) is a design pattern where a class receives its dependencies from an external source rather than creating them itself.
+      Angular has a built-in dependency injection framework that makes it easy to manage services and components.
+    </p>
+  </section>
+
+  <section>
+    <h2>Creating a Service</h2>
+    <p>Let's create a simple logging service:</p>
+    <pre><code>// src/app/logger.service.ts
+import &#123; Injectable &#125; from '&#64;angular/core';
+
+      &#64;Injectable(&#123;
+        providedIn: 'root' // This makes the service available app-wide
+&#125;)
+      export class LoggerService &#123;
+      log(msg: string) &#123;
+    console.log('LoggerService: ' + msg);
+  &#125;
+&#125;
+</code></pre>
+  </section>
+
+  <section>
+    <h2>Injecting the Service into a Component</h2>
+    <p>Now inject the <code>LoggerService</code> into a component:</p>
+    <pre><code>// src/app/app.component.ts
+import &#123; Component &#125; from '&#64;angular/core';
+import &#123; LoggerService &#125; from './logger.service';
+
+      &#64;Component(&#123;
+        selector: 'app-root',
+        template: `
+        &lt;h1&gt;Dependency Injection Demo&lt;/h1&gt;
+        &lt;button (click)="doLog()"&gt;Log Message&lt;/button&gt;
+        `
+        &#125;)
+      export class AppComponent &#123;
+      constructor(private logger: LoggerService) &#123;&#125;
+
+  doLog() &#123;
+    this.logger.log('Button clicked!');
+  &#125;
+&#125;
+</code></pre>
+  </section>
+
+  <section>
+    <h2>Providing Services in Modules</h2>
+    <p>You can also provide a service in a specific module instead of root:</p>
+    <pre><code>// src/app/feature/feature.module.ts
+import &#123; NgModule &#125; from '&#64;angular/core';
+import &#123; CommonModule &#125; from '&#64;angular/common';
+import &#123; FeatureComponent &#125; from './feature.component';
+import &#123; LoggerService &#125; from '../logger.service';
+
+      &#64;NgModule(&#123;
+        declarations: [FeatureComponent],
+        imports: [CommonModule],
+        providers: [LoggerService] // Provided only in this module
+&#125;)
+      export class FeatureModule &#123;&#125;
+</code></pre>
+  </section>
+
+  <section>
+    <h2>Hierarchical Injectors</h2>
+    <p>
+      Angular uses hierarchical injectors, meaning each component can have its own injector.
+      If a service is provided at the component level, it creates a new instance for that component.
+    </p>
+    <pre><code>&#64;Component(&#123;
+      selector: 'child-component',
+      template: '&lt;p&gt;Child&lt;/p&gt;',
+      providers: [LoggerService] // Unique instance for this component
+&#125;)
+      export class ChildComponent &#123;
+      constructor(private logger: LoggerService) &#123;
+    this.logger.log('Child component logger');
+  &#125;
+&#125;
+</code></pre>
+  </section>
+
+  <section>
+    <h2>Conclusion</h2>
+    <ul>
+      <li>Use <code>&#64;Injectable(&#123; providedIn: 'root' &#125;)</code> for singleton services.</li>
+      <li>Inject services using constructor injection.</li>
+      <li>Override service scope by using <code>providers</code> at component or module level.</li>
+    </ul>
+    <p>Angular DI helps keep your code clean, testable, and scalable.</p>
+  </section>
+</div>

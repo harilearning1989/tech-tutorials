@@ -1,1 +1,137 @@
-<p>component-communication works!</p>
+<div id="container">
+  <h1>Angular Component Communication</h1>
+  <p>This tutorial explains the key patterns used in Angular to communicate between components.</p>
+
+  <section>
+    <h2>1. Parent to Child: <code>&#64;Input()</code></h2>
+    <p>Use <code>&#64;Input</code> to pass data from a parent component to its child.</p>
+
+    <h3>Parent Template</h3>
+    <pre><code>&lt;app-child [message]="parentMessage"&gt;&lt;/app-child&gt;</code></pre>
+
+    <h3>Parent Component</h3>
+    <pre><code>export class ParentComponent &#123;
+      parentMessage = 'Hello from Parent';
+&#125;</code></pre>
+
+    <h3>Child Component</h3>
+    <pre><code>import &#123; Component, Input &#125; from '&#64;angular/core';
+
+      &#64;Component(&#123;
+        selector: 'app-child',
+        template: '<p ngNonBindable>Child says: {{ message }}</p>'
+        &#125;)
+      export class ChildComponent &#123;
+      &#64;Input() message!: string;
+&#125;</code></pre>
+  </section>
+
+  <section>
+    <h2>2. Child to Parent: <code>&#64;Output()</code> + EventEmitter</h2>
+    <p>Use <code>&#64;Output</code> to emit an event from the child that the parent can listen to.</p>
+
+    <h3>Parent Template</h3>
+    <pre><code>&lt;app-child (notify)="onNotify($event)"&gt;&lt;/app-child&gt;</code></pre>
+
+    <h3>Parent Component</h3>
+    <pre><code>onNotify(message: string) &#123;
+      alert('Received from child: ' + message);
+&#125;</code></pre>
+
+    <h3>Child Component</h3>
+    <pre><code>import &#123; Component, Output, EventEmitter &#125; from '&#64;angular/core';
+
+      &#64;Component(&#123;
+        selector: 'app-child',
+        template: '&lt;button (click)="sendMessage()"&gt;Send Message&lt;/button&gt;'
+        &#125;)
+      export class ChildComponent &#123;
+      &#64;Output() notify = new EventEmitter&lt;string&gt;();
+
+  sendMessage() &#123;
+    this.notify.emit('Hello from Child!');
+  &#125;
+&#125;</code></pre>
+  </section>
+
+  <section>
+    <h2>3. Sibling to Sibling: Shared Service</h2>
+    <p>Use a service with RxJS <code>Subject</code> to communicate between unrelated components.</p>
+
+    <h3>Shared Service</h3>
+    <pre><code>import &#123; Injectable &#125; from '&#64;angular/core';
+import &#123; Subject &#125; from 'rxjs';
+
+      &#64;Injectable(&#123; providedIn: 'root' &#125;)
+      export class MessageService &#123;
+      private messageSource = new Subject&lt;string&gt;();
+  message$ = this.messageSource.asObservable();
+
+  sendMessage(msg: string) &#123;
+    this.messageSource.next(msg);
+  &#125;
+&#125;</code></pre>
+
+    <h3>Sender Component</h3>
+    <pre><code>constructor(private messageService: MessageService) &#123;&#125;
+
+send() &#123;
+      this.messageService.sendMessage('Hello from Sender');
+&#125;</code></pre>
+
+    <h3>Receiver Component</h3>
+    <pre><code>constructor(private messageService: MessageService) &#123;&#125;
+
+ngOnInit() &#123;
+      this.messageService.message$.subscribe(msg => &#123;
+    console.log('Received:', msg);
+  &#125;);
+&#125;</code></pre>
+  </section>
+
+  <section>
+    <h2>4. Access Child via <code>&#64;ViewChild()</code></h2>
+    <p>Use <code>&#64;ViewChild</code> to access a child component's methods or properties.</p>
+
+    <h3>Child Component</h3>
+    <pre><code>&#64;Component(&#123; selector: 'app-child', template: '' &#125;)
+      export class ChildComponent &#123;
+      sayHi() &#123;
+    console.log('Hello from Child Component!');
+  &#125;
+&#125;</code></pre>
+
+    <h3>Parent Component</h3>
+    <pre><code>import &#123; ViewChild &#125; from '&#64;angular/core';
+
+export class ParentComponent &#123;
+      &#64;ViewChild(ChildComponent) child!: ChildComponent;
+
+      callChild() &#123;
+    this.child.sayHi();
+  &#125;
+&#125;</code></pre>
+  </section>
+
+  <section>
+    <h2>5. Using Template Reference Variables</h2>
+    <p>You can also access child elements using a reference variable in the template.</p>
+
+    <pre><code>&lt;input #userInput type="text" /&gt;
+&lt;button (click)="log(userInput.value)"&gt;Log Input&lt;/button&gt;</code></pre>
+
+    <pre><code>log(value: string) &#123;
+      console.log(value);
+&#125;</code></pre>
+  </section>
+
+  <section>
+    <h2>Best Practices</h2>
+    <ul>
+      <li>Use <code>&#64;Input</code>/<code>&#64;Output</code> for simple parent-child communication.</li>
+      <li>Use a shared service for complex or cross-component communication.</li>
+      <li>Minimize direct DOM access with <code>&#64;ViewChild</code>.</li>
+      <li>Always unsubscribe from Observables when using services.</li>
+    </ul>
+  </section>
+</div>

@@ -1,1 +1,49 @@
-<p>data-binding works!</p>
+<div id="container">
+  <section>
+    <h3 class="bg-secondary">Angular 19 Data Binding Tutorial</h3>
+
+    <!-- Interpolation -->
+    <h3>1. Interpolation</h3>
+    <p>Displays data from the component to the template using double curly braces.</p>
+    <pre><code><p ngNonBindable>{{ title }}</p></code></pre>
+
+    <!-- Property Binding -->
+    <h3>2. Property Binding</h3>
+    <p>Binds DOM properties to component class properties using square brackets.</p>
+    <pre><code>&lt;img [src]="imageUrl" alt="Image"&gt;</code></pre>
+
+    <!-- Attribute Binding -->
+    <h3>3. Attribute Binding</h3>
+    <p>Used when binding standard HTML attributes like <code>aria-label</code>.</p>
+    <pre><code>&lt;button [attr.aria-label]="label"&gt;Click Me&lt;/button&gt;</code></pre>
+
+    <!-- Class Binding -->
+    <h3>4. Class Binding</h3>
+    <p>Dynamically adds or removes CSS classes based on component conditions.</p>
+    <pre><code>&lt;div [class.active]="isActive"&gt;Active Box&lt;/div&gt;</code></pre>
+
+    <!-- Style Binding -->
+    <h3>5. Style Binding</h3>
+    <p>Binds inline CSS styles dynamically.</p>
+    <pre><code>&lt;div [style.background-color]="bgColor"&gt;Styled Box&lt;/div&gt;</code></pre>
+
+    <!-- Event Binding -->
+    <h3>6. Event Binding</h3>
+    <p>Binds an event (e.g., click) to a method in the component class.</p>
+    <pre><code>&lt;button (click)="onClick()"&gt;Click Me&lt;/button&gt;</code></pre>
+
+    <!-- Two-Way Binding -->
+    <h3>7. Two-Way Binding</h3>
+    <p>Binds data in both directions using <code>[(ngModel)]</code>. Requires <code>FormsModule</code>.</p>
+    <pre><code>&lt;input [(ngModel)]="username"&gt;
+&lt;p&gt;Hello, <p ngNonBindable>{{ username }}</p>!&lt;/p&gt;</code></pre>
+
+    <!-- Signal Binding -->
+    <h3>8. Signal Binding (Angular 16+)</h3>
+    <p>Angular Signals provide reactive state management.</p>
+    <pre><code>&lt;p&gt;Counter: <p ngNonBindable>{{ counter() }}</p>&lt;/p&gt;
+&lt;button (click)="counter.update(c =&gt; c + 1)"&gt;+&lt;/button&gt;</code></pre>
+  </section>
+
+
+</div>

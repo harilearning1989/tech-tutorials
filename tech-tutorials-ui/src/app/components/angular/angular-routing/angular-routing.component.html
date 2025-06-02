@@ -1,1 +1,88 @@
-<p>angular-routing works!</p>
+<div id="container">
+  <h2 class="bg-secondary">Angular Routing Tutorial</h2>
+
+  <p>This tutorial explains how to set up routing in Angular to navigate between different components (pages) in your
+    application.</p>
+
+  <section>
+    <h2>Step 1: Create an Angular Project</h2>
+    <p>Use Angular CLI to create a new project with routing support:</p>
+    <pre><code>ng new my-routing-app</code></pre>
+    <p>Make sure to choose <strong>Yes</strong> when asked to add routing, and select your preferred stylesheet format.
+    </p>
+  </section>
+  <section>
+    <h2>Step 2: Create Components</h2>
+    <p>Create separate components for each route/page:</p>
+    <pre><code>
+ng g c home
+ng g c about
+ng g c contact
+  </code></pre>
+  </section>
+
+  <section>
+    <h2>Step 3: Configure Routing</h2>
+    <p>Open <code>src/app/app-routing.module.ts</code> and define your routes like this:</p>
+    <pre><code>
+import &#123; NgModule &#125; from '&#64;angular/core';
+import &#123; RouterModule, Routes &#125; from '&#64;angular/router';
+import &#123; HomeComponent &#125; from './home/home.component';
+import &#123; AboutComponent &#125; from './about/about.component';
+import &#123; ContactComponent &#125; from './contact/contact.component';
+
+const routes: Routes = [
+    &#123; path: '', component: HomeComponent &#125;,
+    &#123; path: 'about', component: AboutComponent &#125;,
+    &#123; path: 'contact', component: ContactComponent &#125;,
+    &#123; path: '**', redirectTo: '' &#125; // Wildcard route for a 404 page
+];
+
+    &#64;NgModule(&#123;
+      imports: [RouterModule.forRoot(routes)],
+      exports: [RouterModule]
+      &#125;)
+    export class AppRoutingModule &#123; &#125;
+  </code></pre>
+  </section>
+  <section>
+    <h2>Step 4: Add Router Outlet</h2>
+    <p>In <code>app.component.html</code>, add a navigation menu and a router outlet:</p>
+    <pre><code>
+&lt;nav&gt;
+  &lt;a routerLink="/"&gt;Home&lt;/a&gt;
+  &lt;a routerLink="/about"&gt;About&lt;/a&gt;
+  &lt;a routerLink="/contact"&gt;Contact&lt;/a&gt;
+&lt;/nav&gt;
+
+&lt;hr /&gt;
+
+&lt;router-outlet&gt;&lt;/router-outlet&gt;
+  </code></pre>
+  </section>
+  <section>
+    <h2>Step 5: Add Content to Components</h2>
+    <p>Each component (like <code>home.component.html</code>) can have its own content:</p>
+    <pre><code>
+&lt;h2&gt;Welcome to the Home Page&lt;/h2&gt;
+&lt;p&gt;This is the homepage of our Angular routing example.&lt;/p&gt;
+  </code></pre>
+  </section>
+  <section>
+    <h2>Step 6: Run the Application</h2>
+    <p>Run the app and navigate between pages:</p>
+    <pre><code>ng serve</code></pre>
+    <p>Visit <code>http://localhost:4200</code> in your browser. Clicking the nav links will change the page content
+      without reloading.</p>
+
+    <h2>Bonus: Wildcard Route (Page Not Found)</h2>
+    <p>Add a wildcard route to handle invalid URLs:</p>
+    <pre><code>
+&#123; path: '**', redirectTo: '' &#125;
+  </code></pre>
+  </section>
+  <h2>Conclusion</h2>
+  <p>You've now implemented basic Angular routing with multiple components. This helps create multi-page applications
+    using a single-page app structure.</p>
+
+</div>

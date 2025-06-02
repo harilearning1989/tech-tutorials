@@ -6,9 +6,17 @@ body, html {
 
 #container {
   font-family: Arial, sans-serif;
-  background-color: #fafafa;
+  background-color: rgba(250, 250, 250, 0.82);
   height: 80vh;
   overflow-y: auto;
   box-sizing: border-box;
-  padding: 60px;
+  padding-left: 30px;
+}
+
+section {
+  background: #fff;
+  padding: 1.5em;
+  margin-bottom: 2em;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }

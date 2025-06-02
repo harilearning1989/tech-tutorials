@@ -1,1 +1,89 @@
-<p>angular-forms works!</p>
+<div id="container">
+  <h2 class="bg-secondary">Angular Forms - Complete Theoretical Guide</h2>
+
+  <h2>1. Introduction</h2>
+  <p>Angular provides two types of forms for handling user input:</p>
+  <ul>
+    <li><strong>Template-Driven Forms</strong></li>
+    <li><strong>Reactive Forms</strong></li>
+  </ul>
+
+  <h2>2. Template-Driven Forms</h2>
+  <p>Template-driven forms are defined mostly in the HTML template using directives like <code>ngModel</code>. These forms are easier to use for simple forms but offer less flexibility.</p>
+
+  <h3>Features:</h3>
+  <ul>
+    <li>Uses two-way data binding with <code>ngModel</code></li>
+    <li>Form logic is defined in the template</li>
+    <li>Suitable for simple forms</li>
+  </ul>
+
+  <h3>Example:</h3>
+  <pre><code>&lt;form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)"&gt;
+  &lt;input name="username" ngModel required /&gt;
+  &lt;input type="password" name="password" ngModel required /&gt;
+  &lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+
+  <h2>3. Reactive Forms</h2>
+  <p>Reactive forms are more powerful and scalable. The form model is defined in the component class, providing more control over validation and interaction.</p>
+
+  <h3>Features:</h3>
+  <ul>
+    <li>Form model is defined in the component using <code>FormGroup</code> and <code>FormControl</code></li>
+    <li>Great for dynamic or complex forms</li>
+    <li>Easier to test and manage state</li>
+  </ul>
+
+  <h3>Example:</h3>
+  <pre><code>import &#123; FormGroup, FormControl, Validators &#125; from '&commat;angular/forms';
+
+profileForm = new FormGroup(&#123;
+    firstName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required)
+&#125;);</code></pre>
+
+  <pre><code>&lt;form [formGroup]="profileForm" (ngSubmit)="onSubmit()"&gt;
+  &lt;input formControlName="firstName" /&gt;
+  &lt;input formControlName="lastName" /&gt;
+  &lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+
+  <h2>4. Comparison Table</h2>
+  <table>
+    <tr>
+      <th>Feature</th>
+      <th>Template-Driven</th>
+      <th>Reactive</th>
+    </tr>
+    <tr>
+      <td>Form Model</td>
+      <td>In Template</td>
+      <td>In Component</td>
+    </tr>
+    <tr>
+      <td>Validation</td>
+      <td>Declarative in HTML</td>
+      <td>Imperative in Code</td>
+    </tr>
+    <tr>
+      <td>Flexibility</td>
+      <td>Less</td>
+      <td>More</td>
+    </tr>
+    <tr>
+      <td>Suitable For</td>
+      <td>Simple forms</td>
+      <td>Complex/dynamic forms</td>
+    </tr>
+    <tr>
+      <td>Testing</td>
+      <td>Harder</td>
+      <td>Easier</td>
+    </tr>
+  </table>
+
+  <h2>5. Conclusion</h2>
+  <p>Use Template-Driven Forms for quick and simple use cases. For larger, dynamic, and scalable applications, prefer Reactive Forms for better control, validation, and testing.</p>
+
+</div>
