@@ -97,7 +97,7 @@
           "route": "/angular/lf"
         },
         {
-          "name": "JsonServer",
+          "name": "Json Server",
           "route": "/angular/js"
         }
       ]

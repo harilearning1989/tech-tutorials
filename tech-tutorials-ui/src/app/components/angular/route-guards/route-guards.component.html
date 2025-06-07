@@ -44,6 +44,8 @@
 
   <p><strong>auth.service.ts:</strong></p>
   <code>
+    <pre>
+      <code>
     import &#123; Injectable &#125; from '&#64;angular/core';
 
     &#64;Injectable(&#123; providedIn: 'root' &#125;)
@@ -52,6 +54,8 @@
     return !!localStorage.getItem('token'); // or real check
     &#125;
     &#125;
+      </code>
+    </pre>
   </code>
 
   <hr>
@@ -123,12 +127,16 @@
   <h2>📥 Lazy Loading with CanLoad</h2>
 
   <code>
+    <pre>
+      <code>
     export const canLoadGuard: CanLoadFn = () =&gt; &#123;
     const auth = inject(AuthService);
     return auth.isLoggedIn();
     &#125;;
 
     &#123; path: 'admin', loadChildren: () =&gt; import('./admin.routes'), canLoad: [canLoadGuard] &#125;
+      </code>
+    </pre>
   </code>
 
   <hr>

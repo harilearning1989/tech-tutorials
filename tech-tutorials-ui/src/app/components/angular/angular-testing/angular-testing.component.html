@@ -2,7 +2,8 @@
   <h1>🧪 Angular Testing – Complete Tutorial</h1>
 
   <p>
-    Angular provides built-in tools for testing components, services, pipes, and other units of code using Jasmine and Karma.
+    Angular provides built-in tools for testing components, services, pipes, and other units of code using Jasmine and
+    Karma.
     Testing improves code reliability and helps catch bugs early.
   </p>
 
@@ -13,8 +14,8 @@
   <p>Angular CLI comes with Karma and Jasmine pre-configured. Tests go in files ending with <code>.spec.ts</code>.</p>
 
   <code>
-    ng test      // run unit tests<br>
-    ng test --code-coverage   // run tests + coverage report
+    ng test // run unit tests<br>
+    ng test --code-coverage // run tests + coverage report
   </code>
 
   <hr>
@@ -23,6 +24,8 @@
 
   <p><strong>counter.component.ts</strong></p>
   <code>
+    <pre>
+      <code>
     import &#123; Component &#125; from '&#64;angular/core';
 
     &#64;Component(&#123;
@@ -39,10 +42,14 @@
     this.count++;
     &#125;
     &#125;
+      </code>
+    </pre>
   </code>
 
   <p><strong>counter.component.spec.ts</strong></p>
   <code>
+    <pre>
+      <code>
     import &#123; ComponentFixture, TestBed &#125; from '&#64;angular/core/testing';
     import &#123; CounterComponent &#125; from './counter.component';
 
@@ -71,6 +78,8 @@
     expect(component.count).toBe(1);
     &#125;);
     &#125;);
+      </code>
+    </pre>
   </code>
 
   <hr>
@@ -79,6 +88,8 @@
 
   <p><strong>math.service.ts</strong></p>
   <code>
+    <pre>
+      <code>
     import &#123; Injectable &#125; from '&#64;angular/core';
 
     &#64;Injectable(&#123; providedIn: 'root' &#125;)
@@ -87,10 +98,14 @@
     return a + b;
     &#125;
     &#125;
+      </code>
+    </pre>
   </code>
 
   <p><strong>math.service.spec.ts</strong></p>
   <code>
+    <pre>
+      <code>
     import &#123; TestBed &#125; from '&#64;angular/core/testing';
     import &#123; MathService &#125; from './math.service';
 
@@ -102,10 +117,12 @@
     service = TestBed.inject(MathService);
     &#125;);
 
-  it('should add two numbers', () =&gt; &#123;
+    it('should add two numbers', () =&gt; &#123;
     expect(service.add(2, 3)).toBe(5);
     &#125;);
     &#125;);
+      </code>
+    </pre>
   </code>
 
   <hr>
@@ -114,6 +131,8 @@
 
   <p><strong>api.service.ts</strong></p>
   <code>
+    <pre>
+      <code>
     import &#123; HttpClient &#125; from '&#64;angular/common/http';
     import &#123; Injectable &#125; from '&#64;angular/core';
 
@@ -124,10 +143,14 @@
     return this.http.get('/api/users');
     &#125;
     &#125;
+      </code>
+    </pre>
   </code>
 
   <p><strong>api.service.spec.ts</strong></p>
   <code>
+    <pre>
+      <code>
     import &#123; TestBed &#125; from '&#64;angular/core/testing';
     import &#123; HttpClientTestingModule, HttpTestingController &#125; from '&#64;angular/common/http/testing';
     import &#123; ApiService &#125; from './api.service';
@@ -145,7 +168,7 @@
     httpMock = TestBed.inject(HttpTestingController);
     &#125;);
 
-  it('should fetch users', () =&gt; &#123;
+    it('should fetch users', () =&gt; &#123;
     const mockUsers = [&#123; id: 1, name: 'John' &#125;];
     service.getUsers().subscribe(data =&gt; &#123;
     expect(data).toEqual(mockUsers);
@@ -156,10 +179,12 @@
     req.flush(mockUsers);
     &#125;);
 
-  afterEach(() =&gt; &#123;
+    afterEach(() =&gt; &#123;
     httpMock.verify();
     &#125;);
     &#125;);
+      </code>
+    </pre>
   </code>
 
   <hr>
