@@ -26,6 +26,7 @@ import {InstallSetupComponent} from './components/angular/install-setup/install-
 import {RouteGuardsComponent} from './components/angular/route-guards/route-guards.component';
 import {AngularTestingComponent} from './components/angular/angular-testing/angular-testing.component';
 import {LintingFormattingComponent} from './components/angular/linting-formatting/linting-formatting.component';
+import {JsonServerComponent} from './components/angular/json-server/json-server.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/angular/introduction', pathMatch: 'full' },
@@ -54,5 +55,6 @@ export const routes: Routes = [
   { path: 'angular/at', component: AngularTestingComponent },
   { path: 'angular/lf', component: LintingFormattingComponent }, // Assuming Linting & Formatting is part of testing for now
   { path: 'angular/interceptor', component: InterceptorComponent },
+  { path: 'angular/js', component: JsonServerComponent },
   { path: '**', redirectTo: '/angular/introduction' } // Wildcard route
 ];

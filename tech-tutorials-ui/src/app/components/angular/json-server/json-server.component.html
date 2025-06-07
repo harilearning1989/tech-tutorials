@@ -1,0 +1,176 @@
+<div id="container">
+  <h2>🌐 Angular + JSON Server – Full Tutorial</h2>
+
+  <p>This guide walks you through setting up <strong>JSON Server</strong> with <strong>Angular</strong>
+    to create a mock backend for development and testing.</p>
+
+  <hr>
+
+  <h3>📦 Step 1: Install JSON Server</h3>
+  <pre><code>npm install json-server --save-dev</code></pre>
+
+  <hr>
+
+  <h3>🗃️ Step 2: Create <code>db.json</code> in the project root</h3>
+  <pre><code>&#123;
+    "products": [
+      &#123; "id": 1, "name": "Laptop", "price": 1200 &#125;,
+    &#123; "id": 2, "name": "Mouse", "price": 25 &#125;
+  ]
+&#125;
+</code></pre>
+
+<hr>
+
+<h3>🛠️ Step 3: Add JSON Server Script to <code>package.json</code></h3>
+
+<h3>Modify <code>package.json</code>:</h3>
+<pre><code>&#123;
+  "scripts": &#123;
+    "start": "ng serve",
+    "json-server": "json-server --watch db.json --port 3000"
+  &#125;,
+    "devDependencies": &#123;
+      "json-server": "^0.17.3"
+      &#125;
+    &#125;
+</code></pre>
+
+  <hr>
+
+  <h3>🚀 Step 4: Run JSON Server</h3>
+  <pre><code>npm run json-server</code></pre>
+  <p>This will run the server at <code>http://localhost:3000/products</code>.</p>
+
+  <hr>
+
+  <h3>⚙️ Step 5: Create Angular Service</h3>
+  <pre><code>ng generate service services/product</code></pre>
+
+  <h3><code>src/app/services/product.service.ts</code></h3>
+  <pre><code>
+import &#123; Injectable &#125; from '&#64;angular/core';
+import &#123; HttpClient &#125; from '&#64;angular/common/http';
+import &#123; Observable &#125; from 'rxjs';
+
+export interface Product &#123;
+    id: number;
+    name: string;
+    price: number;
+&#125;
+
+    &#64;Injectable(&#123; providedIn: 'root' &#125;)
+    export class ProductService &#123;
+    private apiUrl = 'http://localhost:3000/products';
+
+    constructor(private http: HttpClient) &#123;&#125;
+
+  getProducts(): Observable&lt;Product[]&gt; &#123;
+    return this.http.get&lt;Product[]&gt;(this.apiUrl);
+  &#125;
+
+  getProduct(id: number): Observable&lt;Product&gt; &#123;
+    return this.http.get&lt;Product&gt;(`$&#123;this.apiUrl&#125;/$&#123;id&#125;`);
+  &#125;
+
+  addProduct(product: Product): Observable&lt;Product&gt; &#123;
+    return this.http.post&lt;Product&gt;(this.apiUrl, product);
+  &#125;
+
+  updateProduct(product: Product): Observable&lt;Product&gt; &#123;
+    return this.http.put&lt;Product&gt;(`$&#123;this.apiUrl&#125;/$&#123;product.id&#125;`, product);
+  &#125;
+
+  deleteProduct(id: number): Observable&lt;any&gt; &#123;
+    return this.http.delete(`$&#123;this.apiUrl&#125;/$&#123;id&#125;`);
+  &#125;
+&#125;
+</code></pre>
+
+  <hr>
+
+  <h3>🧪 Step 6: Use the Service in a Component</h3>
+
+  <h3><code>src/app/app.component.ts</code></h3>
+  <pre><code>
+import &#123; Component, OnInit &#125; from '&#64;angular/core';
+import &#123; ProductService, Product &#125; from './services/product.service';
+
+    &#64;Component(&#123;
+      selector: 'app-root',
+      template: `
+      &lt;h1&gt;Products&lt;/h1&gt;
+      &lt;ul&gt;
+      &lt;li *ngFor="let product of products"&gt;
+    <p ngNonBindable>{{ product.name }} - ${{ product.price }}</p>
+      &lt;/li&gt;
+      &lt;/ul&gt;
+      `
+      &#125;)
+    export class AppComponent implements OnInit &#123;
+    products: Product[] = [];
+
+    constructor(private productService: ProductService) &#123;&#125;
+
+  ngOnInit() &#123;
+    this.productService.getProducts().subscribe(data => this.products = data);
+  &#125;
+&#125;
+</code></pre>
+
+  <hr>
+
+  <h3>🔁 Optional: Set Up a Proxy to Avoid CORS</h3>
+
+  <h3>Create <code>proxy.conf.json</code></h3>
+  <pre><code>&#123;
+    "/api": &#123;
+    "target": "http://localhost:3000",
+    "secure": false,
+    "pathRewrite": &#123;
+    "^/api": ""
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+
+  <h3>Update <code>angular.json</code>:</h3>
+  <pre><code>
+"serve": &#123;
+    "options": &#123;
+    "proxyConfig": "proxy.conf.json"
+  &#125;
+&#125;
+</code></pre>
+
+  <h3>Update <code>product.service.ts</code> for proxy:</h3>
+  <pre><code>private apiUrl = '/api/products';</code></pre>
+
+  <hr>
+
+  <h3>📁 Final Project Structure</h3>
+  <pre><code>
+angular-project/
+├── src/
+│   ├── app/
+│   │   ├── app.component.ts
+│   │   └── services/
+│   │       └── product.service.ts
+├── db.json
+├── proxy.conf.json
+├── package.json
+</code></pre>
+
+  <div class="note">
+    ✅ You can run the mock backend with <code>npm run json-server</code> and the Angular app with <code>npm start</code>.
+    <br><br>
+    ✅ Optionally, use <code>concurrently</code> to run both together:
+    <pre><code>
+npm install concurrently --save-dev
+
+"scripts": &#123;
+      "start:all": "concurrently \\"npm run json-server\\" \\"ng serve\\""
+&#125;
+  </code></pre>
+  </div>
+</div>

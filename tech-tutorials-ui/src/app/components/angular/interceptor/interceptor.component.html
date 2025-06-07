@@ -19,9 +19,13 @@
   </p>
 
   <code>
-    export interface HttpInterceptor &#123;
-    intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt;;
-    &#125;
+    <pre>
+      <code>
+        export interface HttpInterceptor &#123;
+          intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt;;
+        &#125;
+      </code>
+    </pre>
   </code>
 
   <hr>
@@ -30,44 +34,52 @@
 
   <p><strong>1. Token Interceptor Example</strong></p>
   <code>
+    <pre>
+      <code>
     import &#123; Injectable &#125; from '&#64;angular/core';<br>
     import &#123; HttpInterceptor, HttpRequest, HttpHandler, HttpEvent &#125; from '&#64;angular/common/http';<br>
     import &#123; Observable &#125; from 'rxjs';
 
     &#64;Injectable()
     export class TokenInterceptor implements HttpInterceptor &#123;
-    intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt; &#123;
-    const token = localStorage.getItem('token');
+      intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt; &#123;
+      const token = localStorage.getItem('token');
 
     if (token) &#123;
-    const cloned = req.clone(&#123;
-    headers: req.headers.set('Authorization', `Bearer $&#123;token&#125;`)
-    &#125;);
+      const cloned = req.clone(&#123;
+      headers: req.headers.set('Authorization', `Bearer $&#123;token&#125;`)
+      &#125;);
       return next.handle(cloned);
     &#125;
 
-    return next.handle(req);
+      return next.handle(req);
+      &#125;
     &#125;
-    &#125;
+      </code>
+    </pre>
   </code>
 
   <p><strong>2. Error Handling Interceptor</strong></p>
   <code>
-    import &#123; Injectable &#125; from '&#64;angular/core';<br>
-    import &#123; HttpInterceptor, HttpRequest, HttpHandler, HttpErrorResponse &#125; from '&#64;angular/common/http';<br>
-    import &#123; Observable, catchError, throwError &#125; from 'rxjs';
+    <pre>
+      <code>
+        import &#123; Injectable &#125; from '&#64;angular/core';<br>
+        import &#123; HttpInterceptor, HttpRequest, HttpHandler, HttpErrorResponse &#125; from '&#64;angular/common/http';<br>
+        import &#123; Observable, catchError, throwError &#125; from 'rxjs';
 
-    &#64;Injectable()
-    export class ErrorInterceptor implements HttpInterceptor &#123;
-    intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;any&gt; &#123;
-    return next.handle(req).pipe(
-    catchError((error: HttpErrorResponse) =&gt; &#123;
-    alert(`Error: $&#123;error.status&#125; - $&#123;error.message&#125;`);
-        return throwError(() =&gt; error);
-    &#125;)
-    );
-    &#125;
-    &#125;
+        &#64;Injectable()
+        export class ErrorInterceptor implements HttpInterceptor &#123;
+          intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;any&gt; &#123;
+          return next.handle(req).pipe(
+          catchError((error: HttpErrorResponse) =&gt; &#123;
+            alert(`Error: $&#123;error.status&#125; - $&#123;error.message&#125;`);
+            return throwError(() =&gt; error);
+          &#125;)
+          );
+          &#125;
+        &#125;
+      </code>
+    </pre>
   </code>
 
   <hr>
@@ -78,6 +90,8 @@
 
   <p><strong>main.ts:</strong></p>
   <code>
+    <pre>
+      <code>
     import &#123; bootstrapApplication &#125; from '&#64;angular/platform-browser';<br>
     import &#123; AppComponent &#125; from './app/app.component';<br>
     import &#123; provideHttpClient, withInterceptors &#125; from '&#64;angular/common/http';<br>
@@ -94,6 +108,8 @@
       )
     ]
     &#125;);
+      </code>
+    </pre>
   </code>
 
   <hr>
@@ -134,19 +150,24 @@
 
   <h2>📦 Bonus: Full Token Interceptor with Expiry Check</h2>
   <code>
+    <pre>
+      <code>
     intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt; &#123;
     const token = localStorage.getItem('token');
     const isExpired = false; // use JWT decode lib to check expiry
 
     if (token && !isExpired) &#123;
-    const cloned = req.clone(&#123;
-    headers: req.headers.set('Authorization', 'Bearer ' + token)
-    &#125;);
-    return next.handle(cloned);
-    &#125;
+      const cloned = req.clone(&#123;
+      headers: req.headers.set('Authorization', 'Bearer ' + token)
+      &#125;);
+      return next.handle(cloned);
+      &#125;
 
-    return next.handle(req);
+      return next.handle(req);
     &#125;
+      </code>
+    </pre>
+
   </code>
 
   <div class="note">

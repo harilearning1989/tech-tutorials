@@ -1,0 +1,526 @@
+{
+  "technologies": [
+    {
+      "id": "angular",
+      "name": "Angular",
+      "topics": [
+        {
+          "name": "Introduction",
+          "route": "/angular/introduction"
+        },
+        {
+          "name": "Install&Setup",
+          "route": "/angular/setup"
+        },
+        {
+          "name": "CLI",
+          "route": "/angular/cli"
+        },
+        {
+          "name": "Project Structure",
+          "route": "/angular/ps"
+        },
+        {
+          "name": "Component Life Cycle",
+          "route": "/angular/clc"
+        },
+        {
+          "name": "Bootstrap Setup",
+          "route": "/angular/bs"
+        },
+        {
+          "name": "Binding",
+          "route": "/angular/binding"
+        },
+        {
+          "name": "Forms",
+          "route": "/angular/forms"
+        },
+        {
+          "name": "Routing and Navigation",
+          "route": "/angular/routing"
+        },
+        {
+          "name": "Dependency Injection",
+          "route": "/angular/di"
+        },
+        {
+          "name": "Pipes",
+          "route": "/angular/pipes"
+        },
+        {
+          "name": "Directives",
+          "route": "/angular/directives"
+        },
+        {
+          "name": "Templates",
+          "route": "/angular/templates"
+        },
+        {
+          "name": "Component Communication",
+          "route": "/angular/cc"
+        },
+        {
+          "name": "Services",
+          "route": "/angular/services"
+        },
+        {
+          "name": "Custom Events",
+          "route": "/angular/cv"
+        },
+        {
+          "name": "Integration with Rest API",
+          "route": "/angular/api"
+        },
+        {
+          "name": "Token-based Login",
+          "route": "/angular/authentication"
+        },
+        {
+          "name": "Interceptor",
+          "route": "/angular/interceptor"
+        },
+        {
+          "name": "RouteGuard",
+          "route": "/angular/rg"
+        },
+        {
+          "name": "Browser storage",
+          "route": "/angular/storages"
+        },
+        {
+          "name": "Testing",
+          "route": "/angular/at"
+        },
+        {
+          "name": "Linting & Formatting",
+          "route": "/angular/lf"
+        },
+        {
+          "name": "JsonServer",
+          "route": "/angular/js"
+        }
+      ]
+    },
+    {
+      "id": "java",
+      "name": "Java",
+      "topics": [
+        {
+          "name": "Basics",
+          "route": "/java/basics"
+        },
+        {
+          "name": "OOP",
+          "route": "/java/oop"
+        }
+      ]
+    },
+    {
+      "id": "spring",
+      "name": "Spring Boot",
+      "topics": [
+        {
+          "name": "Introduction",
+          "route": "/spring/introduction"
+        },
+        {
+          "name": "Rest API",
+          "route": "/spring/rest-api"
+        }
+      ]
+    },
+    {
+      "id": "microService",
+      "name": "MicroServices",
+      "topics": [
+        {
+          "name": "Introduction",
+          "route": "/spring/introduction"
+        },
+        {
+          "name": "Rest API",
+          "route": "/spring/rest-api"
+        }
+      ]
+    },
+    {
+      "id": "jpa",
+      "name": "JPA",
+      "topics": [
+        {
+          "name": "Entities",
+          "route": "/jpa/entities"
+        },
+        {
+          "name": "Repositories",
+          "route": "/jpa/repositories"
+        }
+      ]
+    },
+    {
+      "id": "testing",
+      "name": "Junit/Mockito",
+      "topics": [
+        {
+          "name": "Setup",
+          "route": "/oracle/setup"
+        }
+      ]
+    },
+    {
+      "id": "oracle",
+      "name": "Oracle",
+      "topics": [
+        {
+          "name": "Setup",
+          "route": "/oracle/setup"
+        },
+        {
+          "name": "CRUD",
+          "route": "/oracle/crud"
+        }
+      ]
+    },
+    {
+      "id": "postgres",
+      "name": "PostgreSQL",
+      "topics": [
+        {
+          "name": "Setup",
+          "route": "/postgres/setup"
+        },
+        {
+          "name": "CRUD",
+          "route": "/postgres/crud"
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Alice Johnson",
+      "email": "alice@example.com"
+    },
+    {
+      "id": 2,
+      "name": "Bob Smith",
+      "email": "bob@example.com"
+    },
+    {
+      "id": 3,
+      "name": "Charlie Rose",
+      "email": "charlie@example.com"
+    },
+    {
+      "id": 4,
+      "name": "Dana White",
+      "email": "dana@example.com"
+    },
+    {
+      "id": 5,
+      "name": "Evan Lee",
+      "email": "evan@example.com"
+    },
+    {
+      "id": 6,
+      "name": "Fiona Green",
+      "email": "fiona@example.com"
+    },
+    {
+      "id": 7,
+      "name": "George King",
+      "email": "george@example.com"
+    },
+    {
+      "id": 8,
+      "name": "Hannah Ray",
+      "email": "hannah@example.com"
+    },
+    {
+      "id": 9,
+      "name": "Ian Scott",
+      "email": "ian@example.com"
+    },
+    {
+      "id": 10,
+      "name": "Jackie Tran",
+      "email": "jackie@example.com"
+    },
+    {
+      "id": 11,
+      "name": "Kevin Moore",
+      "email": "kevin@example.com"
+    },
+    {
+      "id": 12,
+      "name": "Laura Bush",
+      "email": "laura@example.com"
+    },
+    {
+      "id": 13,
+      "name": "Mark Twain",
+      "email": "mark@example.com"
+    },
+    {
+      "id": 14,
+      "name": "Nina Patel",
+      "email": "nina@example.com"
+    },
+    {
+      "id": 15,
+      "name": "Owen Gray",
+      "email": "owen@example.com"
+    },
+    {
+      "id": 16,
+      "name": "Paula Dean",
+      "email": "paula@example.com"
+    },
+    {
+      "id": 17,
+      "name": "Quinn West",
+      "email": "quinn@example.com"
+    },
+    {
+      "id": 18,
+      "name": "Rita Ora",
+      "email": "rita@example.com"
+    },
+    {
+      "id": 19,
+      "name": "Steve Nash",
+      "email": "steve@example.com"
+    },
+    {
+      "id": 20,
+      "name": "Tina Fey",
+      "email": "tina@example.com"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Laptop",
+      "price": 1200
+    },
+    {
+      "id": 2,
+      "name": "Smartphone",
+      "price": 800
+    },
+    {
+      "id": 3,
+      "name": "Tablet",
+      "price": 500
+    },
+    {
+      "id": 4,
+      "name": "Monitor",
+      "price": 300
+    },
+    {
+      "id": 5,
+      "name": "Keyboard",
+      "price": 50
+    },
+    {
+      "id": 6,
+      "name": "Mouse",
+      "price": 40
+    },
+    {
+      "id": 7,
+      "name": "Printer",
+      "price": 150
+    },
+    {
+      "id": 8,
+      "name": "Speaker",
+      "price": 100
+    },
+    {
+      "id": 9,
+      "name": "Webcam",
+      "price": 70
+    },
+    {
+      "id": 10,
+      "name": "Microphone",
+      "price": 90
+    },
+    {
+      "id": 11,
+      "name": "Router",
+      "price": 120
+    },
+    {
+      "id": 12,
+      "name": "SSD",
+      "price": 200
+    },
+    {
+      "id": 13,
+      "name": "External HDD",
+      "price": 150
+    },
+    {
+      "id": 14,
+      "name": "USB Hub",
+      "price": 30
+    },
+    {
+      "id": 15,
+      "name": "Graphics Card",
+      "price": 400
+    },
+    {
+      "id": 16,
+      "name": "RAM",
+      "price": 100
+    },
+    {
+      "id": 17,
+      "name": "Motherboard",
+      "price": 250
+    },
+    {
+      "id": 18,
+      "name": "CPU",
+      "price": 350
+    },
+    {
+      "id": 19,
+      "name": "Power Supply",
+      "price": 90
+    },
+    {
+      "id": 20,
+      "name": "Cooling Fan",
+      "price": 45
+    }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "userId": 1,
+      "productId": 2,
+      "quantity": 1
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "productId": 1,
+      "quantity": 1
+    },
+    {
+      "id": 3,
+      "userId": 3,
+      "productId": 3,
+      "quantity": 2
+    },
+    {
+      "id": 4,
+      "userId": 4,
+      "productId": 5,
+      "quantity": 1
+    },
+    {
+      "id": 5,
+      "userId": 5,
+      "productId": 7,
+      "quantity": 1
+    },
+    {
+      "id": 6,
+      "userId": 6,
+      "productId": 8,
+      "quantity": 2
+    },
+    {
+      "id": 7,
+      "userId": 7,
+      "productId": 9,
+      "quantity": 1
+    },
+    {
+      "id": 8,
+      "userId": 8,
+      "productId": 10,
+      "quantity": 1
+    },
+    {
+      "id": 9,
+      "userId": 9,
+      "productId": 6,
+      "quantity": 3
+    },
+    {
+      "id": 10,
+      "userId": 10,
+      "productId": 4,
+      "quantity": 2
+    },
+    {
+      "id": 11,
+      "userId": 11,
+      "productId": 15,
+      "quantity": 1
+    },
+    {
+      "id": 12,
+      "userId": 12,
+      "productId": 14,
+      "quantity": 2
+    },
+    {
+      "id": 13,
+      "userId": 13,
+      "productId": 12,
+      "quantity": 1
+    },
+    {
+      "id": 14,
+      "userId": 14,
+      "productId": 13,
+      "quantity": 1
+    },
+    {
+      "id": 15,
+      "userId": 15,
+      "productId": 17,
+      "quantity": 1
+    },
+    {
+      "id": 16,
+      "userId": 16,
+      "productId": 18,
+      "quantity": 1
+    },
+    {
+      "id": 17,
+      "userId": 17,
+      "productId": 19,
+      "quantity": 1
+    },
+    {
+      "id": 18,
+      "userId": 18,
+      "productId": 20,
+      "quantity": 1
+    },
+    {
+      "id": 19,
+      "userId": 19,
+      "productId": 11,
+      "quantity": 1
+    },
+    {
+      "id": 20,
+      "userId": 20,
+      "productId": 16,
+      "quantity": 2
+    }
+  ]
+}

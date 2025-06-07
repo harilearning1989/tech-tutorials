@@ -28,6 +28,8 @@
 
   <p><strong>auth.guard.ts:</strong></p>
   <code>
+    <pre>
+      <code>
     import &#123; CanActivateFn &#125; from '&#64;angular/router';<br>
     import &#123; inject &#125; from '&#64;angular/core';<br>
     import &#123; AuthService &#125; from '../services/auth.service';
@@ -36,6 +38,8 @@
     const auth = inject(AuthService);
     return auth.isLoggedIn(); // return true or false
     &#125;;
+      </code>
+    </pre>
   </code>
 
   <p><strong>auth.service.ts:</strong></p>
@@ -56,15 +60,19 @@
 
   <p><strong>app.routes.ts (Angular 15+):</strong></p>
   <code>
+    <pre>
+      <code>
     import &#123; Routes &#125; from '&#64;angular/router';<br>
     import &#123; authGuard &#125; from './guards/auth.guard';<br>
     import &#123; HomeComponent &#125; from './components/home.component';<br>
     import &#123; DashboardComponent &#125; from './components/dashboard.component';
 
     export const routes: Routes = [
-    &#123; path: '', component: HomeComponent &#125;,
-    &#123; path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] &#125;
+      &#123; path: '', component: HomeComponent &#125;,
+      &#123; path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] &#125;
     ];
+      </code>
+    </pre>
   </code>
 
   <hr>
@@ -73,14 +81,18 @@
 
   <p><strong>main.ts:</strong></p>
   <code>
-    import &#123; bootstrapApplication &#125; from '&#64;angular/platform-browser';<br>
-    import &#123; provideRouter &#125; from '&#64;angular/router';<br>
-    import &#123; AppComponent &#125; from './app/app.component';<br>
-    import &#123; routes &#125; from './app/app.routes';
+    <pre>
+      <code>
+      import &#123; bootstrapApplication &#125; from '&#64;angular/platform-browser';<br>
+      import &#123; provideRouter &#125; from '&#64;angular/router';<br>
+      import &#123; AppComponent &#125; from './app/app.component';<br>
+      import &#123; routes &#125; from './app/app.routes';
 
-    bootstrapApplication(AppComponent, &#123;
-    providers: [provideRouter(routes)]
-    &#125;);
+      bootstrapApplication(AppComponent, &#123;
+        providers: [provideRouter(routes)]
+      &#125;);
+      </code>
+    </pre>
   </code>
 
   <hr>
@@ -89,12 +101,16 @@
 
   <p><strong>can-exit.guard.ts:</strong></p>
   <code>
+    <pre>
+      <code>
     import &#123; CanDeactivateFn &#125; from '&#64;angular/router';<br>
     import &#123; inject &#125; from '&#64;angular/core';
 
     export const canExitGuard: CanDeactivateFn&lt;any&gt; = (component, route, state) =&gt; &#123;
-    return confirm('You have unsaved changes. Leave this page?');
+      return confirm('You have unsaved changes. Leave this page?');
     &#125;;
+      </code>
+    </pre>
   </code>
 
   <p><strong>Route setup:</strong></p>
