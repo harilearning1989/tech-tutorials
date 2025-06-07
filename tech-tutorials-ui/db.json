@@ -125,6 +125,34 @@
           "route": "/spring/introduction"
         },
         {
+          "name": "Core",
+          "route": "/spring/core"
+        },
+        {
+          "name": "Web",
+          "route": "/spring/web"
+        },
+        {
+          "name": "AOP",
+          "route": "/spring/aop"
+        },
+        {
+          "name": "Security",
+          "route": "/spring/security"
+        },
+        {
+          "name": "JPA",
+          "route": "/spring/jpa"
+        },
+        {
+          "name": "Reactive",
+          "route": "/spring/reactive"
+        },
+        {
+          "name": "Batch",
+          "route": "/spring/batch"
+        },
+        {
           "name": "Rest API",
           "route": "/spring/rest-api"
         }
@@ -141,20 +169,6 @@
         {
           "name": "Rest API",
           "route": "/spring/rest-api"
-        }
-      ]
-    },
-    {
-      "id": "jpa",
-      "name": "JPA",
-      "topics": [
-        {
-          "name": "Entities",
-          "route": "/jpa/entities"
-        },
-        {
-          "name": "Repositories",
-          "route": "/jpa/repositories"
         }
       ]
     },
