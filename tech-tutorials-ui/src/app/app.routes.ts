@@ -28,6 +28,8 @@ import {AngularTestingComponent} from './components/angular/angular-testing/angu
 import {LintingFormattingComponent} from './components/angular/linting-formatting/linting-formatting.component';
 import {JsonServerComponent} from './components/angular/json-server/json-server.component';
 import {CoreComponent} from './components/spring/core/core.component';
+import {SpringIntroductionComponent} from './components/spring/spring-introduction/spring-introduction.component';
+import {WebComponent} from './components/spring/web/web.component';
 
 export const routes: Routes = [
   {path: '', redirectTo: '/angular/introduction', pathMatch: 'full'},
@@ -59,6 +61,7 @@ export const routes: Routes = [
   {path: 'angular/js', component: JsonServerComponent},
   //Spring Topics
   {path: 'spring/core', component: CoreComponent},
-  {path: 'spring/introduction', component: IntroductionComponent},
+  {path: 'spring/introduction', component: SpringIntroductionComponent},
+  {path: 'spring/web', component: WebComponent},
   {path: '**', redirectTo: '/angular/introduction'} // Wildcard route
 ];

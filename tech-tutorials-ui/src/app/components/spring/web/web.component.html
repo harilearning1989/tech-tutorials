@@ -1,1 +1,148 @@
-<p>web works!</p>
+<div id="container">
+  <h1>Spring Web (Spring MVC) Tutorial</h1>
+
+  <section>
+    <h2>1. What is Spring MVC?</h2>
+    <p>
+      Spring Web MVC is a module of the Spring Framework that provides Model-View-Controller architecture
+      and ready components to develop flexible and loosely coupled web applications.
+    </p>
+  </section>
+
+  <section>
+    <h2>2. Core Concepts</h2>
+    <ul>
+      <li><strong>DispatcherServlet:</strong> Front controller that handles all HTTP requests and responses.</li>
+      <li><strong>Controller:</strong> Handles user requests and prepares responses.</li>
+      <li><strong>Model:</strong> Data passed to views.</li>
+      <li><strong>View Resolver:</strong> Maps view names to actual views (JSP, Thymeleaf, etc).</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>3. Project Structure</h2>
+    <pre><code>src/
+ └── main/
+     ├── java/
+     │   └── com.example.controller/
+     │        └── HomeController.java
+     └── resources/
+         └── application.properties
+     └── webapp/
+         └── WEB-INF/
+             └── views/
+                 └── index.jsp</code></pre>
+  </section>
+
+  <section>
+    <h2>4. Maven Dependencies</h2>
+    <pre><code>&lt;dependencies&gt;
+  &lt;dependency&gt;
+    &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;
+    &lt;version&gt;5.3.32&lt;/version&gt;
+  &lt;/dependency&gt;
+  &lt;dependency&gt;
+    &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+    &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt;
+    &lt;version&gt;4.0.1&lt;/version&gt;
+    &lt;scope&gt;provided&lt;/scope&gt;
+  &lt;/dependency&gt;
+&lt;/dependencies&gt;</code></pre>
+  </section>
+
+  <section>
+    <h2>5. Configuration Class (Java-based)</h2>
+    <pre><code>&#64;Configuration
+      &#64;EnableWebMvc
+      &#64;ComponentScan(basePackages = "com.example")
+      public class WebConfig implements WebMvcConfigurer &#123;
+      &#64;Bean
+      public InternalResourceViewResolver viewResolver() &#123;
+    InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+    resolver.setPrefix("/WEB-INF/views/");
+    resolver.setSuffix(".jsp");
+    return resolver;
+  &#125;
+&#125;</code></pre>
+  </section>
+
+  <section>
+    <h2>6. DispatcherServlet Configuration (web.xml)</h2>
+    <pre><code>&lt;web-app&gt;
+  &lt;servlet&gt;
+    &lt;servlet-name&gt;dispatcher&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+    &lt;init-param&gt;
+      &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+      &lt;param-value&gt;/WEB-INF/web-config.xml&lt;/param-value&gt;
+    &lt;/init-param&gt;
+    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+  &lt;/servlet&gt;
+
+  &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;dispatcher&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;
+&lt;/web-app&gt;</code></pre>
+  </section>
+
+  <section>
+    <h2>7. Creating a Controller</h2>
+    <pre><code>&#64;Controller
+      public class HomeController &#123;
+
+      &#64;GetMapping("/")
+      public String home(Model model) &#123;
+    model.addAttribute("message", "Welcome to Spring MVC!");
+    return "index";
+  &#125;
+&#125;</code></pre>
+  </section>
+
+  <section>
+    <h2>8. JSP View (index.jsp)</h2>
+    <pre><code>&lt;%&#64; page contentType="text/html;charset=UTF-8" language="java" %&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Home Page&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;$&#123;message&#125;&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+  </section>
+
+  <section>
+    <h2>9. Running the Application</h2>
+    <p>
+      You can deploy the project on a servlet container like <strong>Apache Tomcat</strong> by packaging it as a WAR file. Alternatively, use Spring Boot for simplified configuration (auto-setup).
+    </p>
+  </section>
+
+  <section>
+    <h2>10. Spring Boot (Alternative Approach)</h2>
+    <pre><code>&#64;SpringBootApplication
+      public class SpringWebApp &#123;
+      public static void main(String[] args) &#123;
+    SpringApplication.run(SpringWebApp.class, args);
+  &#125;
+&#125;
+
+      &#64;RestController
+      public class HelloController &#123;
+      &#64;GetMapping("/")
+      public String hello() &#123;
+    return "Hello from Spring Boot!";
+  &#125;
+&#125;</code></pre>
+  </section>
+
+  <section>
+    <h2>11. Summary</h2>
+    <ul>
+      <li>Spring MVC is a robust framework for building web applications.</li>
+      <li>DispatcherServlet is the core component.</li>
+      <li>Supports traditional and annotation-based configuration.</li>
+      <li>Can be integrated with JSP, Thymeleaf, REST APIs, and more.</li>
+    </ul>
+  </section>
+</div>

@@ -4,8 +4,8 @@
   <section>
     <h2>What is Spring?</h2>
     <p>
-      Spring is a powerful, lightweight framework used for building enterprise-level Java applications. It simplifies
-      Java development by providing comprehensive infrastructure support.
+      Spring is a powerful, lightweight framework used for building enterprise-level Java applications.
+      It simplifies Java development by providing comprehensive infrastructure support.
     </p>
   </section>
 
@@ -14,9 +14,7 @@
     <ul>
       <li><strong>Lightweight:</strong> Minimal overhead, modular architecture.</li>
       <li><strong>Dependency Injection (DI):</strong> Reduces tight coupling between components.</li>
-      <li><strong>Aspect-Oriented Programming (AOP):</strong> Clean separation of concerns like logging and
-        transactions.
-      </li>
+      <li><strong>Aspect-Oriented Programming (AOP):</strong> Clean separation of concerns like logging and transactions.</li>
       <li><strong>Modularity:</strong> Includes sub-projects like Spring MVC, Spring Boot, Spring Security, etc.</li>
     </ul>
   </section>
@@ -48,24 +46,24 @@
     <pre><code>// Java class with &#64;Component
       &#64;Component
       public class HelloService &#123;
-      public void sayHello() &#123;
-    System.out.println("Hello from Spring!");
-  &#125;
-&#125;
+        public void sayHello() &#123;
+          System.out.println("Hello from Spring!");
+        &#125;
+      &#125;
 
 // Configuration
       &#64;Configuration
-      &#64;ComponentScan ("com.example")
+      &#64;ComponentScan("com.example")
       public class AppConfig &#123;&#125;
 
 // Main method
-public class Main &#123;
+  public class Main &#123;
       public static void main(String[] args) &#123;
-    ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-    HelloService helloService = context.getBean(HelloService.class);
-    helloService.sayHello();
-  &#125;
-&#125;</code></pre>
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        HelloService helloService = context.getBean(HelloService.class);
+        helloService.sayHello();
+      &#125;
+  &#125;</code></pre>
   </section>
 
   <section>
@@ -81,8 +79,7 @@ public class Main &#123;
   <section>
     <h2>Conclusion</h2>
     <p>
-      Spring Framework is one of the most widely used frameworks in the Java ecosystem. Its powerful features and
-      modular approach make it ideal for building robust, maintainable, and testable applications.
+      Spring Framework is one of the most widely used frameworks in the Java ecosystem. Its powerful features and modular approach make it ideal for building robust, maintainable, and testable applications.
     </p>
   </section>
 </div>
