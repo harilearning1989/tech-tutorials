@@ -85,7 +85,7 @@
           "route": "/angular/rg"
         },
         {
-          "name": "Browser storage",
+          "name": "Browser Storage",
           "route": "/angular/storages"
         },
         {
@@ -118,7 +118,7 @@
     },
     {
       "id": "spring",
-      "name": "Spring Boot",
+      "name": "Spring",
       "topics": [
         {
           "name": "Introduction",
@@ -141,16 +141,22 @@
           "route": "/spring/security"
         },
         {
-          "name": "JPA",
-          "route": "/spring/jpa"
-        },
-        {
-          "name": "Reactive",
-          "route": "/spring/reactive"
-        },
-        {
           "name": "Batch",
           "route": "/spring/batch"
+        },
+        {
+          "name": "Rest API",
+          "route": "/spring/rest-api"
+        }
+      ]
+    },
+    {
+      "id": "springBoot",
+      "name": "Spring Boot",
+      "topics": [
+        {
+          "name": "Introduction",
+          "route": "/spring/introduction"
         },
         {
           "name": "Rest API",

@@ -1,0 +1,134 @@
+<div id="container">
+  <h1>Spring Core - Complete Overview</h1>
+
+  <section>
+    <h2>1. What is Spring Core?</h2>
+    <p>
+      Spring Core is the fundamental part of the Spring Framework.
+      It provides the foundation for building Java applications using Dependency Injection and Inversion of Control.
+    </p>
+  </section>
+
+  <section>
+    <h2>2. Core Concepts</h2>
+    <ul>
+      <li><strong>IoC (Inversion of Control):</strong> Objects do not create their dependencies but get them from the
+        Spring container.
+      </li>
+      <li><strong>DI (Dependency Injection):</strong> Injects dependencies into a class through constructor, setter, or
+        field.
+      </li>
+      <li><strong>Bean:</strong> Object managed by the Spring IoC container.</li>
+      <li><strong>ApplicationContext:</strong> Advanced factory interface for accessing beans.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>3. Dependency Injection Types</h2>
+    <ul>
+      <li><strong>Constructor Injection</strong></li>
+      <li><strong>Setter Injection</strong></li>
+      <li><strong>Field Injection</strong> (using annotations)</li>
+    </ul>
+    <pre><code>// Constructor Injection
+    &#64;Component
+    public class Car &#123;
+    private Engine engine;
+    &#64;Autowired
+    public Car(Engine engine) &#123;
+    this.engine = engine;
+  &#125;
+&#125;</code></pre>
+  </section>
+
+  <section>
+    <h2>4. Bean Configuration</h2>
+    <ul>
+      <li>XML-based configuration</li>
+      <li>Annotation-based configuration</li>
+      <li>Java-based configuration</li>
+    </ul>
+
+    <pre><code>// Java-based Configuration
+    &#64;Configuration
+    public class AppConfig &#123;
+    &#64;Bean
+    public Engine engine() &#123;
+    return new Engine();
+  &#125;
+&#125;</code></pre>
+  </section>
+
+  <section>
+    <h2>5. Bean Lifecycle</h2>
+    <ul>
+      <li>Instantiation</li>
+      <li>Populate properties</li>
+      <li>Set Bean Name and Factory</li>
+      <li>Post-construct methods</li>
+      <li>Custom init-method</li>
+      <li>Bean ready for use</li>
+      <li>Custom destroy-method (if any)</li>
+    </ul>
+    <pre><code>&#64;Component
+    public class SampleBean implements InitializingBean, DisposableBean &#123;
+    public void afterPropertiesSet() &#123;
+    // initialization code
+  &#125;
+
+  public void destroy() &#123;
+    // cleanup code
+  &#125;
+&#125;</code></pre>
+  </section>
+
+  <section>
+    <h2>6. Annotations</h2>
+    <ul>
+      <li><code>&#64;Component</code>, <code>&#64;Service</code>, <code>&#64;Repository</code>,
+        <code>&#64;Controller</code></li>
+      <li><code>&#64;Autowired</code> – automatic injection</li>
+      <li><code>&#64;Qualifier</code> – specify which bean to inject</li>
+      <li><code>&#64;Value</code> – inject values from properties</li>
+      <li><code>&#64;PostConstruct</code>, <code>&#64;PreDestroy</code> – lifecycle hooks</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>7. Spring Modules Around Core</h2>
+    <ul>
+      <li>Spring AOP</li>
+      <li>Spring ORM</li>
+      <li>Spring JDBC</li>
+      <li>Spring MVC</li>
+      <li>Spring Security</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>8. Example: Minimal Spring Core App</h2>
+    <pre><code>// AppConfig.java
+    &#64;Configuration
+    &#64;ComponentScan("com.example")
+    public class AppConfig &#123;&#125;
+
+// Main.java
+public class Main &#123;
+    public static void main(String[] args) &#123;
+    ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+    Car car = context.getBean(Car.class);
+    car.drive();
+  &#125;
+&#125;</code></pre>
+  </section>
+
+  <section>
+    <h2>9. Benefits of Spring Core</h2>
+    <ul>
+      <li>Loose coupling</li>
+      <li>Easy testability</li>
+      <li>Reusable code</li>
+      <li>Flexible configuration</li>
+    </ul>
+  </section>
+</div>

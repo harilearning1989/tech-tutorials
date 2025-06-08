@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import {Routes} from '@angular/router';
 import {IntroductionComponent} from './components/angular/introduction/introduction.component';
 import {CliNewCreationComponent} from './components/angular/cli-new-creation/cli-new-creation.component';
 import {PipesComponent} from './components/angular/pipes/pipes.component';
@@ -27,34 +27,38 @@ import {RouteGuardsComponent} from './components/angular/route-guards/route-guar
 import {AngularTestingComponent} from './components/angular/angular-testing/angular-testing.component';
 import {LintingFormattingComponent} from './components/angular/linting-formatting/linting-formatting.component';
 import {JsonServerComponent} from './components/angular/json-server/json-server.component';
+import {CoreComponent} from './components/spring/core/core.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/angular/introduction', pathMatch: 'full' },
+  {path: '', redirectTo: '/angular/introduction', pathMatch: 'full'},
 
   // Angular Topics
-  { path: 'angular/introduction', component: IntroductionComponent },
-  { path: 'angular/setup', component: InstallSetupComponent },
-  { path: 'angular/cli', component: CliNewCreationComponent },
-  { path: 'angular/ps', component: ProjectStructureComponent },
-  { path: 'angular/clc', component: ComponentLifeCycleComponent },
-  { path: 'angular/bs', component: BootstrapSetupComponent },
-  { path: 'angular/binding', component: DataBindingComponent },
-  { path: 'angular/forms', component: AngularFormsComponent },
-  { path: 'angular/routing', component: AngularRoutingComponent },
-  { path: 'angular/di', component: DependencyInjectionComponent },
-  { path: 'angular/pipes', component: PipesComponent },
-  { path: 'angular/directives', component: DirectivesComponent },
-  { path: 'angular/templates', component: TemplatesComponent },
-  { path: 'angular/cc', component: ComponentCommunicationComponent },
-  { path: 'angular/services', component: ServicesComponent },
-  { path: 'angular/api', component: RestApiComponent },
-  { path: 'angular/authentication', component: RestApiAuthenticationComponent },
-  { path: 'angular/rg', component: RouteGuardsComponent },
-  { path: 'angular/storages', component: BrowserStorageComponent },
-  { path: 'angular/cv', component: CustomEventComponent },
-  { path: 'angular/at', component: AngularTestingComponent },
-  { path: 'angular/lf', component: LintingFormattingComponent }, // Assuming Linting & Formatting is part of testing for now
-  { path: 'angular/interceptor', component: InterceptorComponent },
-  { path: 'angular/js', component: JsonServerComponent },
-  { path: '**', redirectTo: '/angular/introduction' } // Wildcard route
+  {path: 'angular/introduction', component: IntroductionComponent},
+  {path: 'angular/setup', component: InstallSetupComponent},
+  {path: 'angular/cli', component: CliNewCreationComponent},
+  {path: 'angular/ps', component: ProjectStructureComponent},
+  {path: 'angular/clc', component: ComponentLifeCycleComponent},
+  {path: 'angular/bs', component: BootstrapSetupComponent},
+  {path: 'angular/binding', component: DataBindingComponent},
+  {path: 'angular/forms', component: AngularFormsComponent},
+  {path: 'angular/routing', component: AngularRoutingComponent},
+  {path: 'angular/di', component: DependencyInjectionComponent},
+  {path: 'angular/pipes', component: PipesComponent},
+  {path: 'angular/directives', component: DirectivesComponent},
+  {path: 'angular/templates', component: TemplatesComponent},
+  {path: 'angular/cc', component: ComponentCommunicationComponent},
+  {path: 'angular/services', component: ServicesComponent},
+  {path: 'angular/api', component: RestApiComponent},
+  {path: 'angular/authentication', component: RestApiAuthenticationComponent},
+  {path: 'angular/rg', component: RouteGuardsComponent},
+  {path: 'angular/storages', component: BrowserStorageComponent},
+  {path: 'angular/cv', component: CustomEventComponent},
+  {path: 'angular/at', component: AngularTestingComponent},
+  {path: 'angular/lf', component: LintingFormattingComponent}, // Assuming Linting & Formatting is part of testing for now
+  {path: 'angular/interceptor', component: InterceptorComponent},
+  {path: 'angular/js', component: JsonServerComponent},
+  //Spring Topics
+  {path: 'spring/core', component: CoreComponent},
+  {path: 'spring/introduction', component: IntroductionComponent},
+  {path: '**', redirectTo: '/angular/introduction'} // Wildcard route
 ];

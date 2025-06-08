@@ -1,0 +1,88 @@
+<div id="container">
+  <h1>Introduction to the Spring Framework</h1>
+
+  <section>
+    <h2>What is Spring?</h2>
+    <p>
+      Spring is a powerful, lightweight framework used for building enterprise-level Java applications. It simplifies
+      Java development by providing comprehensive infrastructure support.
+    </p>
+  </section>
+
+  <section>
+    <h2>Key Features</h2>
+    <ul>
+      <li><strong>Lightweight:</strong> Minimal overhead, modular architecture.</li>
+      <li><strong>Dependency Injection (DI):</strong> Reduces tight coupling between components.</li>
+      <li><strong>Aspect-Oriented Programming (AOP):</strong> Clean separation of concerns like logging and
+        transactions.
+      </li>
+      <li><strong>Modularity:</strong> Includes sub-projects like Spring MVC, Spring Boot, Spring Security, etc.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Core Modules</h2>
+    <ul>
+      <li><strong>Spring Core:</strong> Provides DI and IoC container.</li>
+      <li><strong>Spring Context:</strong> Application context for configuration.</li>
+      <li><strong>Spring AOP:</strong> Aspect-oriented programming features.</li>
+      <li><strong>Spring ORM:</strong> Integration with ORM frameworks like Hibernate.</li>
+      <li><strong>Spring JDBC:</strong> Simplifies database access.</li>
+      <li><strong>Spring Web MVC:</strong> Framework for building web applications.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Why Use Spring?</h2>
+    <ul>
+      <li>Reduces boilerplate code in Java</li>
+      <li>Encourages good programming practices (e.g., SOLID)</li>
+      <li>Built-in support for testing and configuration</li>
+      <li>Large and active community</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Simple Spring Example</h2>
+    <pre><code>// Java class with &#64;Component
+      &#64;Component
+      public class HelloService &#123;
+      public void sayHello() &#123;
+    System.out.println("Hello from Spring!");
+  &#125;
+&#125;
+
+// Configuration
+      &#64;Configuration
+      &#64;ComponentScan ("com.example")
+      public class AppConfig &#123;&#125;
+
+// Main method
+public class Main &#123;
+      public static void main(String[] args) &#123;
+    ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+    HelloService helloService = context.getBean(HelloService.class);
+    helloService.sayHello();
+  &#125;
+&#125;</code></pre>
+  </section>
+
+  <section>
+    <h2>Spring Ecosystem</h2>
+    <ul>
+      <li><strong>Spring Boot:</strong> Simplifies application setup and deployment.</li>
+      <li><strong>Spring Security:</strong> Adds authentication and authorization support.</li>
+      <li><strong>Spring Data:</strong> Simplifies data access.</li>
+      <li><strong>Spring Cloud:</strong> For building distributed systems and microservices.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Conclusion</h2>
+    <p>
+      Spring Framework is one of the most widely used frameworks in the Java ecosystem. Its powerful features and
+      modular approach make it ideal for building robust, maintainable, and testable applications.
+    </p>
+  </section>
+</div>

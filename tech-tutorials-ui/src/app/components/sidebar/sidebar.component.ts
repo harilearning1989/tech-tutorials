@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {NgForOf} from '@angular/common';
 import {TechnologiesService} from '../../services/technologies.service';
+import {Technology} from '../../models/technology';
 
 @Component({
   selector: 'app-sidebar',
@@ -15,7 +16,7 @@ import {TechnologiesService} from '../../services/technologies.service';
 })
 export class SidebarComponent implements OnInit {
 
-  technologies: any[] = [];
+  technologies: Technology[] = [];
 
   constructor(private technologiesService: TechnologiesService) {}
 

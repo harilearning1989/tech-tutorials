@@ -32,7 +32,10 @@ describe('TechnologiesService', () => {
     const mockTechnologies = [{ id: 1, name: 'Angular' }, { id: 2, name: 'React' }];
 
     service.getTechnologies().subscribe(data => {
-      expect(data).toEqual(mockTechnologies);
+      expect(data).withContext("Technologies should be equal").toEqual(mockTechnologies);
+      expect(data.length).withContext("Technologies length should be equal").toEqual(2);
+      expect(data[0].name).withContext("Technologies Name should match").toEqual('Angular');
+      expect(data[1].name).withContext("Technologies Name should match").toEqual('React');
     });
 
     const req = httpMock.expectOne('http://localhost:3000/technologies');
