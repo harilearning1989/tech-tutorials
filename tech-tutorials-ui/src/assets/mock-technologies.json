@@ -1,0 +1,30 @@
+[
+  {
+    "id": "angular",
+    "name": "Angular",
+    "topics": [
+      {
+        "name": "Introduction",
+        "route": "/angular/introduction"
+      },
+      {
+        "name": "Install&Setup",
+        "route": "/angular/setup"
+      }
+    ]
+  },
+  {
+    "id": "java",
+    "name": "Java",
+    "topics": [
+      {
+        "name": "Basics",
+        "route": "/java/basics"
+      },
+      {
+        "name": "OOP",
+        "route": "/java/oop"
+      }
+    ]
+  }
+]
