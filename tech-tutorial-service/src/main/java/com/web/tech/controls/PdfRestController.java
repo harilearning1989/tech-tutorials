@@ -6,13 +6,19 @@ import com.itextpdf.forms.fields.PdfFormField;
 import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.colors.DeviceRgb;
+import com.itextpdf.kernel.events.Event;
+import com.itextpdf.kernel.events.IEventHandler;
+import com.itextpdf.kernel.events.PdfDocumentEvent;
+import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfPage;
+import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
+import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.borders.SolidBorder;
@@ -31,6 +37,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
@@ -44,6 +51,77 @@ public class PdfRestController {
 
     public PdfRestController(PdfService pdfService) {
         this.pdfService = pdfService;
+    }
+
+    @GetMapping("/generateFooter")
+    public ResponseEntity<byte[]> generatePdfWithFooter() throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        // 1. Open document
+        PdfWriter writer = new PdfWriter(outputStream);
+        PdfDocument pdfDoc = new PdfDocument(writer);
+        PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
+
+        PdfFormXObject totalPagesPlaceholder = new PdfFormXObject(new Rectangle(0, 0, 50, 12));
+        pdfDoc.addEventHandler(PdfDocumentEvent.END_PAGE, new FooterWithTotalHandler(font, totalPagesPlaceholder));
+
+        //no need start
+        Document document = new Document(pdfDoc);
+// 2. Add dynamic content
+        for (int i = 1; i <= 100; i++) {
+            document.add(new Paragraph("Line number " + i).setFont(font).setFontSize(12));
+        }
+//no need end
+// 3. Get total pages BEFORE closing document
+        int totalPages = pdfDoc.getNumberOfPages();  // This works even before close()
+
+// 4. Fill the placeholder BEFORE closing the document
+        PdfCanvas canvas = new PdfCanvas(totalPagesPlaceholder, pdfDoc);
+        canvas.beginText()
+                .setFontAndSize(font, 10)
+                .moveText(0, 0)
+                .showText(String.valueOf(totalPages))
+                .endText();
+
+// 5. Now it's safe to close
+        document.close();
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=application_form.pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(outputStream.toByteArray());
+    }
+
+    private static class FooterWithTotalHandler implements IEventHandler {
+
+        private final PdfFont font;
+        private final PdfFormXObject totalPagePlaceholder;
+
+        public FooterWithTotalHandler(PdfFont font, PdfFormXObject totalPagePlaceholder) {
+            this.font = font;
+            this.totalPagePlaceholder = totalPagePlaceholder;
+        }
+
+        @Override
+        public void handleEvent(Event event) {
+            PdfDocumentEvent docEvent = (PdfDocumentEvent) event;
+            PdfDocument pdfDoc = docEvent.getDocument();
+            PdfPage page = docEvent.getPage();
+            int pageNumber = pdfDoc.getPageNumber(page);
+
+            PdfCanvas canvas = new PdfCanvas(page.newContentStreamBefore(), page.getResources(), pdfDoc);
+
+            float x = page.getPageSize().getWidth() - 150;
+            float y = 20;
+
+            canvas.beginText()
+                    .setFontAndSize(font, 10)
+                    .moveText(x, y)
+                    .showText("Page " + pageNumber + " of ")
+                    .endText();
+
+            canvas.addXObject(totalPagePlaceholder, x + 45, y);
+        }
     }
 
     @GetMapping("/generate4")
@@ -139,7 +217,7 @@ public class PdfRestController {
             table1.addCell(createCell05("Name of Institute/College/University"));
             document.add(table1);
 
-            Table table2 = new Table(UnitValue.createPercentArray(new float[]{1,1}));
+            Table table2 = new Table(UnitValue.createPercentArray(new float[]{1, 1}));
             table2.setWidth(UnitValue.createPercentValue(100));
             table2.setFixedLayout();
             table2.addCell(createCell05("Qualification (Degree/Course)"));
